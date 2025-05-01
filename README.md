@@ -1,6 +1,6 @@
-# SmartTask - Frontend 🎯
+# Taskoom - Frontend 🎯
 
-Interface web do projeto **SmartTask**, um gerenciador de tarefas completo integrado ao backend em FastAPI.
+Interface web do meu projeto **Taskoom**, um gerenciador de tarefas completo integrado ao backend em **FastAPI + Python**.
 
 Este frontend foi desenvolvido com **React + Next.js + TypeScript**, e se comunica com a API via Axios.
 
