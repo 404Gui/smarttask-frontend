@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 import api from '@/services/api';
 import Cookies from 'js-cookie';
 import TaskItem from '@/components/TaskItem/TaskItem';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import AddTaskForm from '@/components/AddTaskForm/AddTaskForm';
 import styles from './Dashboard.module.css';
+import SearchBar from '@/components/SearchBar/SearchBar';
+import Header from '@/components/Header/Header';
+
 
 type Task = {
   id: number;
@@ -15,24 +16,10 @@ type Task = {
   completed: boolean;
 };
 
-const taskSchema = z.object({
-  title: z.string().min(3, 'Título muito curto'),
-  description: z.string().min(5, 'Descrição muito curta'),
-});
-
-type TaskForm = z.infer<typeof taskSchema>;
-
 export default function DashboardPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [query, setQuery] = useState('');
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<TaskForm>({
-    resolver: zodResolver(taskSchema),
-  });
 
   const fetchTasks = async () => {
     try {
@@ -46,14 +33,13 @@ export default function DashboardPage() {
     }
   };
 
-  const createTask = async (data: TaskForm) => {
+  const createTask = async (data: { title: string; description: string; priority: string }) => {
     try {
       const token = Cookies.get('token');
       const res = await api.post('/tasks', data, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(prev => [...prev, res.data]);
-      reset();
     } catch (err) {
       console.error('Erro ao criar tarefa');
     }
@@ -85,41 +71,33 @@ export default function DashboardPage() {
     }
   };
 
+  const filteredTasks = tasks.filter(task =>
+    `${task.title} ${task.description}`.toLowerCase().includes(query.toLowerCase())
+  );
+  
+
   useEffect(() => {
     fetchTasks();
   }, []);
 
   return (
+    <>
+    <Header userName="Fulano" />
+
     <main className={styles.dashboard}>
-      <h1 className={styles.title}>Minhas Tarefas</h1>
+      <h1 className={styles.title}>Suas Tarefas</h1>
+  
+      {/* <SearchBar query={query} onChange={setQuery} /> */}
+      <SearchBar query={query} onChange={setQuery}>
+  <AddTaskForm onSubmit={createTask} />
+</SearchBar>
 
-      <form onSubmit={handleSubmit(createTask)} className={styles.form}>
-        <input
-          {...register('title')}
-          placeholder="Título"
-          className={styles.input}
-        />
-        {errors.title && <p className={styles.error}>{errors.title.message}</p>}
-
-        <textarea
-          {...register('description')}
-          placeholder="Descrição"
-          className={styles.textarea}
-        />
-        {errors.description && (
-          <p className={styles.error}>{errors.description.message}</p>
-        )}
-
-        <button type="submit" className={styles.button}>
-          Adicionar Tarefa
-        </button>
-      </form>
-
+  
       <div className={styles.taskList}>
-        {tasks.length === 0 ? (
-          <p className={styles.empty}>Nenhuma tarefa ainda. Crie uma acima 👆</p>
+        {filteredTasks.length === 0 ? (
+          <p className={styles.empty}>Nenhuma tarefa encontrada.</p>
         ) : (
-          tasks.map(task => (
+          filteredTasks.map(task => (
             <TaskItem
               key={task.id}
               task={task}
@@ -129,6 +107,10 @@ export default function DashboardPage() {
           ))
         )}
       </div>
+  
+      {/* <AddTaskForm onSubmit={createTask} /> */}
     </main>
+    </>
   );
+  
 }

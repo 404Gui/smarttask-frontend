@@ -1,26 +1,63 @@
 .taskItem {
-    padding: 16px;
-    border-radius: 8px;
+    padding: 1.25rem;
+    border-radius: 12px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    background-color: var(--color-background);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    background-color: #1f1f1f;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
     transition: background-color 0.3s ease, transform 0.2s ease;
+    color: #fff;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
   
   .taskItem.completed {
-    background-color: #e0f9e0;
+    opacity: 0.6;
+  }
+  
+  .left {
+    display: flex;
+    gap: 1rem;
+    flex: 1;
+    align-items: flex-start;
+  }
+  
+  .priority {
+    padding: 0.2rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    min-width: 60px;
+    text-align: center;
+  }
+  
+  .baixa {
+    background-color: #22c55e;
+    color: #fff;
+  }
+  
+  .média {
+    background-color: #eab308;
+    color: #000;
+  }
+  
+  .alta {
+    background-color: #ef4444;
+    color: #fff;
   }
   
   .taskContent {
-    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    max-width: 500px;
   }
   
   .taskTitle {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 1.125rem;
-    transition: color 0.2s ease;
   }
   
   .taskTitle.completed {
@@ -29,9 +66,8 @@
   }
   
   .taskDescription {
-    color: #333;
-    margin-top: 4px;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
+    color: #ccc;
   }
   
   .taskDescription.completed {
@@ -41,16 +77,18 @@
   
   .buttonsContainer {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
   
   .button {
-    font-size: 0.875rem;
-    padding: 8px 12px;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.8rem;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    font-weight: 500;
   }
   
   .button:hover {
@@ -58,20 +96,48 @@
   }
   
   .buttonConclude {
-    background-color: #664caf;
+    background-color: #4b6ef5;
     color: white;
   }
   
   .buttonDelete {
-    background-color: #f44336;
+    background-color: #d32f2f;
     color: white;
   }
   
   .buttonConclude:hover {
-    background-color: #45a049;
+    background-color: #3a52c5;
   }
   
   .buttonDelete:hover {
-    background-color: #d32f2f;
+    background-color: #b71c1c;
+  }
+  
+
+  .priorityTag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    background-color: #333;
+    color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .baixa {
+    background-color: #22c55e;
+  }
+  
+  .média {
+    background-color: #eab308;
+    color: #000;
+  }
+  
+  .alta {
+    background-color: #ef4444;
   }
   
