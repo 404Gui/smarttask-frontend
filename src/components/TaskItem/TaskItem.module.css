@@ -77,3 +77,8 @@
   transform: scale(1.1);
 }
 
+.taskMeta {
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 0.2rem;
+}

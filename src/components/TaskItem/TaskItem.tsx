@@ -31,6 +31,9 @@ const TaskItem: FC<Props> = ({ task, onDelete, onToggle }) => {
           <h3 className={styles.taskTitle}>{task.title}</h3>          
         </div>
         <p className={styles.taskDescription}>{task.description}</p>
+        <p className={styles.taskMeta}>
+          Criada em: {new Date(task.created_at).toLocaleDateString('pt-BR')}
+        </p>
       </div>
 
       <div className={styles.taskActions}>
@@ -41,6 +44,7 @@ const TaskItem: FC<Props> = ({ task, onDelete, onToggle }) => {
           <Trash2 size={18} />
         </button>
       </div>
+
     </div>
   );
 };

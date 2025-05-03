@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import styles from './AddTaskForm.module.css';
+import { toast } from 'sonner';
 
 type Props = {
     onSubmit: (data: { title: string; description: string; priority: string }) => void;
@@ -12,15 +13,24 @@ export default function AddTaskForm({ onSubmit }: Props) {
     const [description, setDescription] = useState('');
     const [priority, setPriority] = useState('alta');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+    
         if (!title.trim() || !description.trim()) return;
-        onSubmit({ title, description, priority });
-        setTitle('');
-        setDescription('');
-        setPriority('média');
-        setIsOpen(false);
+    
+        try {
+            await onSubmit({ title, description, priority });
+            toast.success('Tarefa adicionada!');
+            setTitle('');
+            setDescription('');
+            setPriority('média');
+            setIsOpen(false);
+        } catch (error) {
+            console.error('Erro ao adicionar tarefa:', error);
+            toast.error('Ops! Isso não era pra ter acontecido. Entre em contato com o administrador.');
+        }
     };
+    
 
     return (
         <div className={styles.wrapper}>

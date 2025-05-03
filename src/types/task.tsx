@@ -4,5 +4,7 @@ export type Task = {
     description: string;
     completed: boolean;
     priority: 'baixa' | 'média' | 'alta';
+    created_at: string;
+    due_date?: string | null;
   };
   
