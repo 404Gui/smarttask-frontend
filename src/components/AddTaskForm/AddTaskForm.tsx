@@ -10,7 +10,7 @@ export default function AddTaskForm({ onSubmit }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [priority, setPriority] = useState('média');
+    const [priority, setPriority] = useState('alta');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -25,7 +25,7 @@ export default function AddTaskForm({ onSubmit }: Props) {
     return (
         <div className={styles.wrapper}>
             <button onClick={() => setIsOpen(prev => !prev)} className={styles.fab}>
-                {isOpen ? 'Cancelar' : 'Adicionar'}
+                {isOpen ? 'Cancelar' : 'Adicionar tarefa +'}
             </button>
 
             <div className={`${styles.formWrapper} ${isOpen ? styles.open : ''}`}>

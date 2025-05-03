@@ -33,6 +33,12 @@
     width: 320px;
     display: none;
   }
+
+  .formWrapper form {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
   
   .formWrapper.open {
     display: block;

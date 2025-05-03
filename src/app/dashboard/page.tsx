@@ -7,14 +7,9 @@ import AddTaskForm from '@/components/AddTaskForm/AddTaskForm';
 import styles from './Dashboard.module.css';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import Header from '@/components/Header/Header';
+import { Task } from '@/types/task';
+import PriorityAccordion from '@/components/PriorityAccordion/PriorityAccordion';
 
-
-type Task = {
-  id: number;
-  title: string;
-  description: string;
-  completed: boolean;
-};
 
 export default function DashboardPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -74,7 +69,14 @@ export default function DashboardPage() {
   const filteredTasks = tasks.filter(task =>
     `${task.title} ${task.description}`.toLowerCase().includes(query.toLowerCase())
   );
-  
+
+  const priorities: ('alta' | 'média' | 'baixa')[] = ['alta', 'média', 'baixa'];
+
+  const groupedTasks = priorities.map(priority => ({
+    priority,
+    tasks: filteredTasks.filter(task => task.priority === priority)
+  }));
+
 
   useEffect(() => {
     fetchTasks();
@@ -82,35 +84,29 @@ export default function DashboardPage() {
 
   return (
     <>
-    <Header userName="Fulano" />
+      <Header userName="Fulano" />
 
-    <main className={styles.dashboard}>
-      <h1 className={styles.title}>Suas Tarefas</h1>
-  
-      {/* <SearchBar query={query} onChange={setQuery} /> */}
-      <SearchBar query={query} onChange={setQuery}>
-  <AddTaskForm onSubmit={createTask} />
-</SearchBar>
+      <main className={styles.dashboard}>
+        <h1 className={styles.title}>Suas Tarefas</h1>
 
-  
-      <div className={styles.taskList}>
-        {filteredTasks.length === 0 ? (
-          <p className={styles.empty}>Nenhuma tarefa encontrada.</p>
-        ) : (
-          filteredTasks.map(task => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              onDelete={deleteTask}
-              onToggle={toggleTask}
-            />
-          ))
-        )}
-      </div>
-  
-      {/* <AddTaskForm onSubmit={createTask} /> */}
-    </main>
+        <SearchBar query={query} onChange={setQuery}>
+          <AddTaskForm onSubmit={createTask} />
+        </SearchBar>
+
+
+        {groupedTasks.map(group => (
+          <PriorityAccordion
+            key={group.priority}
+            priority={group.priority}
+            tasks={group.tasks}
+            onDelete={deleteTask}
+            onToggle={toggleTask}
+          />
+        ))}
+
+
+      </main>
     </>
   );
-  
+
 }
