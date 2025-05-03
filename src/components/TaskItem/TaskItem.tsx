@@ -1,14 +1,10 @@
 'use client';
 import { FC } from 'react';
 import styles from './TaskItem.module.css';
+import { Task } from '@/types/task';
+import { Trash2 } from 'lucide-react';
 
-type Task = {
-  id: number;
-  title: string;
-  description: string;
-  completed: boolean;
-  priority?: 'baixa' | 'média' | 'alta'; // agora opcional
-};
+
 
 type Props = {
   task: Task;
@@ -16,49 +12,33 @@ type Props = {
   onToggle: (task: Task) => void;
 };
 
-const getPriorityIcon = (priority: 'baixa' | 'média' | 'alta') => {
-  switch (priority) {
-    case 'baixa':
-      return '🟢'; // ou algum ícone SVG no futuro
-    case 'média':
-      return '🟡';
-    case 'alta':
-      return '🔴';
-    default:
-      return '';
-  }
-};
-
 
 const TaskItem: FC<Props> = ({ task, onDelete, onToggle }) => {
   return (
-    <div className={`${styles.taskItem} ${task.completed ? styles.completed : ''}`}>
-
-      <div className={styles.left}>
-        {task.priority && (
-          <span className={`${styles.priorityTag} ${styles[task.priority]}`}>
-            {getPriorityIcon(task.priority)} {task.priority}
-          </span>
-        )}
-
-        <div className={styles.taskContent}>
-          <h2 className={`${styles.taskTitle} ${task.completed ? styles.completed : ''}`}>{task.title}</h2>
-          <p className={`${styles.taskDescription} ${task.completed ? styles.completed : ''}`}>{task.description}</p>
-        </div>
+    <div className={`${styles.taskRow} ${task.completed ? styles.completed : ''}`}>
+      
+      <div className={styles.checkboxArea}>
+        <input
+          type="checkbox"
+          checked={task.completed}
+          onChange={() => onToggle(task)}
+          className={styles.checkbox}
+        />
       </div>
 
-      <div className={styles.buttonsContainer}>
-        <button
-          onClick={() => onToggle(task)}
-          className={`${styles.button} ${styles.buttonConclude}`}
-        >
-          {task.completed ? 'Desfazer' : 'Concluir'}
-        </button>
+      <div className={styles.taskDetails}>
+        <div className={styles.taskHeader}>
+          <h3 className={styles.taskTitle}>{task.title}</h3>          
+        </div>
+        <p className={styles.taskDescription}>{task.description}</p>
+      </div>
+
+      <div className={styles.taskActions}>
         <button
           onClick={() => onDelete(task.id)}
           className={`${styles.button} ${styles.buttonDelete}`}
         >
-          Excluir
+          <Trash2 size={18} />
         </button>
       </div>
     </div>
