@@ -39,11 +39,51 @@
 .taskTitle {
   font-weight: 600;
   font-size: 1.1rem;
+  cursor: pointer;
 }
 
 .taskDescription {
   font-size: 0.9rem;
   color: #aaa;
+  cursor: pointer;
+}
+
+.taskTitleInput {
+  font-size: 1.25rem;
+  font-weight: bold;
+  width: 100%;
+  background: transparent;
+  border: 1px solid #444;
+  color: white;
+  padding: 4px;
+}
+
+.taskDescriptionInput {
+  width: 100%;
+  min-height: 60px;
+  background: transparent;
+  border: 1px solid #444;
+  color: white;
+  padding: 4px;
+  resize: vertical;
+}
+
+.editIcon {
+  margin-left: 6px;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+  vertical-align: middle;
+}
+
+.taskTitle, .taskDescription {
+  display: flex;
+  align-items: center;
+}
+
+.taskTitle:hover .editIcon,
+.taskDescription:hover .editIcon {
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 .taskRow.completed .taskTitle,

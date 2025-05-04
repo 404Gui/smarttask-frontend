@@ -1,22 +1,44 @@
 'use client';
-import { FC } from 'react';
+import { FC, useState, KeyboardEvent } from 'react';
 import styles from './TaskItem.module.css';
 import { Task } from '@/types/task';
-import { Trash2 } from 'lucide-react';
-
-
+import { Trash2, Pencil } from 'lucide-react';
 
 type Props = {
   task: Task;
   onDelete: (id: number) => void;
   onToggle: (task: Task) => void;
+  onEdit: (updatedTask: Task) => void;
 };
 
+const TaskItem: FC<Props> = ({ task, onDelete, onToggle, onEdit }) => {
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [isEditingDesc, setIsEditingDesc] = useState(false);
+  const [title, setTitle] = useState(task.title);
+  const [description, setDescription] = useState(task.description);
 
-const TaskItem: FC<Props> = ({ task, onDelete, onToggle }) => {
+  const handleTitleBlur = () => {
+    setIsEditingTitle(false);
+    if (title !== task.title) {
+      onEdit({ ...task, title });
+    }
+  };
+
+  const handleDescBlur = () => {
+    setIsEditingDesc(false);
+    if (description !== task.description) {
+      onEdit({ ...task, description });
+    }
+  };
+
+  const handleTitleKey = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      (e.target as HTMLInputElement).blur();
+    }
+  };
+
   return (
     <div className={`${styles.taskRow} ${task.completed ? styles.completed : ''}`}>
-      
       <div className={styles.checkboxArea}>
         <input
           type="checkbox"
@@ -28,9 +50,46 @@ const TaskItem: FC<Props> = ({ task, onDelete, onToggle }) => {
 
       <div className={styles.taskDetails}>
         <div className={styles.taskHeader}>
-          <h3 className={styles.taskTitle}>{task.title}</h3>          
+          {isEditingTitle ? (
+            <input
+              className={styles.taskTitleInput}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              onBlur={handleTitleBlur}
+              onKeyDown={handleTitleKey}
+              autoFocus
+            />
+          ) : (
+            <h3
+              className={styles.taskTitle}
+              onClick={() => setIsEditingTitle(true)}
+              title="Clique para editar"
+            >
+              {task.title}
+              {/* <Pencil size={14} className={styles.editIcon} /> */}
+            </h3>
+          )}
         </div>
-        <p className={styles.taskDescription}>{task.description}</p>
+
+        {isEditingDesc ? (
+          <textarea
+            className={styles.taskDescriptionInput}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            onBlur={handleDescBlur}
+            autoFocus
+          />
+        ) : (
+          <p
+            className={styles.taskDescription}
+            onClick={() => setIsEditingDesc(true)}
+            title="Clique para editar"
+          >
+            {task.description}
+            {/* <Pencil size={10} className={styles.editIcon} /> */}
+          </p>
+        )}
+
         <p className={styles.taskMeta}>
           Criada em: {new Date(task.created_at).toLocaleDateString('pt-BR')}
         </p>
@@ -44,7 +103,6 @@ const TaskItem: FC<Props> = ({ task, onDelete, onToggle }) => {
           <Trash2 size={18} />
         </button>
       </div>
-
     </div>
   );
 };

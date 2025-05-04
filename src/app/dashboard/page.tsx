@@ -9,6 +9,7 @@ import SearchBar from '@/components/SearchBar/SearchBar';
 import Header from '@/components/Header/Header';
 import { Task } from '@/types/task';
 import PriorityAccordion from '@/components/PriorityAccordion/PriorityAccordion';
+import { toast } from 'sonner';
 
 
 export default function DashboardPage() {
@@ -35,10 +36,29 @@ export default function DashboardPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(prev => [...prev, res.data]);
+      toast.success('Tarefa adicionada!');
     } catch (err) {
       console.error('Erro ao criar tarefa');
+      toast.error('Ops! Isso não era pra ter acontecido. Entre em contato com o administrador.');
     }
   };
+
+  const editTask = async (updatedTask: Task) => {
+    try {
+      const token = Cookies.get('token');
+      const res = await api.put(`/tasks/${updatedTask.id}`, updatedTask, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setTasks(prev =>
+        prev.map(t => (t.id === updatedTask.id ? res.data : t))
+      );
+      toast.success('Tarefa atualizada!');
+    } catch (err) {
+      console.error('Erro ao editar tarefa');
+      toast.error('Não foi possível editar a tarefa.');
+    }
+  };
+  
 
   const deleteTask = async (id: number) => {
     try {
@@ -101,6 +121,7 @@ export default function DashboardPage() {
             tasks={group.tasks}
             onDelete={deleteTask}
             onToggle={toggleTask}
+            onEdit={editTask}
           />
         ))}
 

@@ -20,14 +20,12 @@ export default function AddTaskForm({ onSubmit }: Props) {
     
         try {
             await onSubmit({ title, description, priority });
-            toast.success('Tarefa adicionada!');
             setTitle('');
             setDescription('');
             setPriority('média');
             setIsOpen(false);
         } catch (error) {
             console.error('Erro ao adicionar tarefa:', error);
-            toast.error('Ops! Isso não era pra ter acontecido. Entre em contato com o administrador.');
         }
     };
     
