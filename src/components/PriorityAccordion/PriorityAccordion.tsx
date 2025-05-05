@@ -9,9 +9,10 @@ type Props = {
   tasks: Task[];
   onDelete: (id: number) => void;
   onToggle: (task: Task) => void;
+  onEdit: (updatedTask: Task) => void;
 };
 
-const PriorityAccordion: FC<Props> = ({ priority, tasks, onDelete, onToggle }) => {
+const PriorityAccordion: FC<Props> = ({ priority, tasks, onDelete, onToggle, onEdit }) => {
   const capitalized = priority.charAt(0).toUpperCase() + priority.slice(1);
 
   return (
@@ -23,7 +24,7 @@ const PriorityAccordion: FC<Props> = ({ priority, tasks, onDelete, onToggle }) =
         <p className={styles.empty}>Nenhuma tarefa de prioridade {priority}.</p>
       ) : (
         tasks.map(task => (
-          <TaskItem key={task.id} task={task} onDelete={onDelete} onToggle={onToggle} />
+          <TaskItem key={task.id} task={task} onDelete={onDelete} onToggle={onToggle} onEdit={onEdit} />
         ))
       )}
     </details>
