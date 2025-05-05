@@ -15,6 +15,8 @@ import { toast } from 'sonner';
 export default function DashboardPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [query, setQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('todas');
+  const [priorityFilter, setPriorityFilter] = useState('todas');
 
 
   const fetchTasks = async () => {
@@ -58,7 +60,7 @@ export default function DashboardPage() {
       toast.error('Não foi possível editar a tarefa.');
     }
   };
-  
+
 
   const deleteTask = async (id: number) => {
     try {
@@ -86,17 +88,50 @@ export default function DashboardPage() {
     }
   };
 
-  const filteredTasks = tasks.filter(task =>
-    `${task.title} ${task.description}`.toLowerCase().includes(query.toLowerCase())
-  );
+  const filteredTasks = tasks.filter(task => {
+    const matchesQuery = task.title.toLowerCase().includes(query.toLowerCase());
 
-  const priorities: ('alta' | 'média' | 'baixa')[] = ['alta', 'média', 'baixa'];
+    const matchesStatus =
+      statusFilter === 'todas' ||
+      (statusFilter === 'pendentes' && !task.completed) ||
+      (statusFilter === 'concluidas' && task.completed) ||
+      (statusFilter === 'vencidas' &&
+        !task.completed &&
+        task.due_date &&
+        new Date(task.due_date) < new Date());
 
-  const groupedTasks = priorities.map(priority => ({
+    const matchesPriority =
+      priorityFilter === 'todas' || task.priority === priorityFilter;
+
+    return matchesQuery && matchesStatus && matchesPriority;
+  });
+
+  const priorityOrder: ('alta' | 'média' | 'baixa')[] = ['alta', 'média', 'baixa'];
+  
+  const groupedTasks = priorityOrder.map(priority => ({
     priority,
     tasks: filteredTasks.filter(task => task.priority === priority)
-  }));
+  }));  
 
+  const today = new Date();
+
+  const hasOverdueTask = (tasks: Task[]) =>
+    tasks.some(task => task.due_date && !task.completed && new Date(task.due_date) < today);
+
+  const sortedGroupedTasks = [...groupedTasks].sort((a, b) => {
+    const aOverdue = hasOverdueTask(a.tasks);
+    const bOverdue = hasOverdueTask(b.tasks);
+
+    if (aOverdue && !bOverdue) return -1;
+    if (!aOverdue && bOverdue) return 1;
+
+    if (priorityFilter !== 'todas') {
+      if (a.priority === priorityFilter) return -1;
+      if (b.priority === priorityFilter) return 1;
+    }
+
+    return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
+  });
 
   useEffect(() => {
     fetchTasks();
@@ -109,12 +144,19 @@ export default function DashboardPage() {
       <main className={styles.dashboard}>
         <h1 className={styles.title}>Suas Tarefas</h1>
 
-        <SearchBar query={query} onChange={setQuery}>
+        <SearchBar
+          query={query}
+          onChange={setQuery}
+          statusFilter={statusFilter}
+          onStatusFilterChange={setStatusFilter}
+          priorityFilter={priorityFilter}
+          onPriorityFilterChange={setPriorityFilter}
+        >
           <AddTaskForm onSubmit={createTask} />
         </SearchBar>
 
 
-        {groupedTasks.map(group => (
+        {sortedGroupedTasks.map(group => (
           <PriorityAccordion
             key={group.priority}
             priority={group.priority}

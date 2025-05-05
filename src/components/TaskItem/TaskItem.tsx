@@ -2,7 +2,8 @@
 import { FC, useState, KeyboardEvent } from 'react';
 import styles from './TaskItem.module.css';
 import { Task } from '@/types/task';
-import { Trash2, Pencil } from 'lucide-react';
+import { Trash2, Pencil, CalendarPlus2, CalendarX2 } from 'lucide-react';
+import { isBefore, isToday, parseISO} from 'date-fns';
 
 type Props = {
   task: Task;
@@ -36,6 +37,14 @@ const TaskItem: FC<Props> = ({ task, onDelete, onToggle, onEdit }) => {
       (e.target as HTMLInputElement).blur();
     }
   };
+
+  const dueDate = task.due_date ? parseISO(task.due_date) : null;
+
+  const isOverdue = dueDate ? isBefore(dueDate, new Date()) && !isToday(dueDate) : false;
+  
+  const isDueToday = dueDate ? isToday(dueDate) : false;
+
+  const dateColor = isOverdue ? '#ff4d4d' : isDueToday ? '#ffc107' : '#4da6ff';
 
   return (
     <div className={`${styles.taskRow} ${task.completed ? styles.completed : ''}`}>
@@ -90,9 +99,17 @@ const TaskItem: FC<Props> = ({ task, onDelete, onToggle, onEdit }) => {
           </p>
         )}
 
-        <p className={styles.taskMeta}>
-          Criada em: {new Date(task.created_at).toLocaleDateString('pt-BR')}
-        </p>
+        <div className={styles.taskMetaGroup}>
+          <p className={styles.taskMeta}>
+            <CalendarPlus2 size={15} style={{ marginRight: '4px' }} /> Criação: {new Date(task.created_at).toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' })}
+          </p>          
+          {dueDate && (
+            <p className={styles.taskMeta}>
+              <CalendarX2 size={15} color={dateColor} style={{ marginRight: '4px' }} />
+              Vencimento: {dueDate.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' })}
+            </p>
+          )}
+        </div>
       </div>
 
       <div className={styles.taskActions}>
