@@ -140,7 +140,7 @@ export default function DashboardPage() {
 
   return (
     <>
-      <Header />
+      <Header/>
 
       <main className={styles.dashboard}>
 

@@ -1,0 +1,17 @@
+.toggle {
+    background: transparent;
+    border: 1px solid var(--border-color, #444);
+    border-radius: 6px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--foreground);
+    transition: background 0.2s ease, border 0.2s ease;
+  }
+  
+  .toggle:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+  
