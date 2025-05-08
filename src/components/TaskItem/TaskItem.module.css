@@ -2,14 +2,14 @@
   display: flex;
   align-items: flex-start;
   padding: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--divider);
   transition: background-color 0.2s ease;
-  color: #f1f1f1;
+  color: var(--foreground);
   gap: 1rem;
 }
 
 .taskRow:hover {
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: var(--hover-bg);
 }
 
 .checkboxArea {
@@ -44,7 +44,7 @@
 
 .taskDescription {
   font-size: 0.9rem;
-  color: #aaa;
+  color: var(--muted);
   cursor: pointer;
 }
 
@@ -53,8 +53,8 @@
   font-weight: bold;
   width: 100%;
   background: transparent;
-  border: 1px solid #444;
-  color: white;
+  border: 1px solid var(--input-border);
+  color: var(--input-text);
   padding: 4px;
 }
 
@@ -62,8 +62,8 @@
   width: 100%;
   min-height: 60px;
   background: transparent;
-  border: 1px solid #444;
-  color: white;
+  border: 1px solid var(--input-border);
+  color: var(--input-text);
   padding: 4px;
   resize: vertical;
 }
@@ -98,7 +98,7 @@
   display: flex;
   align-items: center;
   font-size: 0.65rem;
-  color: #bbb;
+  color: var(--muted);
 }
 
 .taskRow.completed .taskTitle,

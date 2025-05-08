@@ -33,8 +33,8 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-xl shadow-md w-full max-w-sm">
+    <main className="flex items-center justify-center min-h-screen">
+      <form onSubmit={handleSubmit(onSubmit)} className="p-6 rounded-xl shadow-md w-full max-w-sm">
         <h2 className="text-xl font-bold mb-4">Registrar</h2>
         
         <input {...register('username')} placeholder="Usuário" className="input mb-2 w-full border rounded p-2" />

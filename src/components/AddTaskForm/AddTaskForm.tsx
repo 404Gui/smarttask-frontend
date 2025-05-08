@@ -46,7 +46,7 @@ export default function AddTaskForm({ onSubmit }: Props) {
     return (
         <div className={styles.wrapper}>
             <button onClick={() => setIsOpen(prev => !prev)} className={styles.fab}>
-                {isOpen ? 'Cancelar' : 'Adicionar tarefa +'}
+                {isOpen ? 'Cancelar' : 'Adicionar'}
             </button>
 
             <div className={`${styles.formWrapper} ${isOpen ? styles.open : ''}`}>
@@ -68,7 +68,6 @@ export default function AddTaskForm({ onSubmit }: Props) {
                         <option value="alta">Alta</option>
                     </select>
 
-                    {/* Campo de data de vencimento */}
                     <div style={{ marginTop: '10px' }}>
                         <label style={{ fontWeight: 500 }}>Data de vencimento:</label>
                         <DatePicker
