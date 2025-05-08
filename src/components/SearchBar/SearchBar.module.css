@@ -5,18 +5,24 @@
     align-items: center;
     gap: 1rem;
   }
-  
-  .input {
-    flex: 1;
-    max-width: 400px;
-    padding: 0.8rem 1rem;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s;
-  }
-  
-  .input:focus {
-    border-color: #4b6ef5;
-  }
+
+.input {
+  flex: 1;
+  max-width: 400px;
+  padding: 0.8rem 1rem;
+  background: var(--input-bg, #121212);
+  border: 1px solid #333;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: white;
+  outline: none;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.input::placeholder {
+  color: #888;
+}
+
+.input:focus {
+  border-color: #4b6ef5;
+}

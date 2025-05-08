@@ -15,11 +15,7 @@ type SearchBarProps = {
 
 export default function SearchBar({
   query,
-  onChange,
-  statusFilter,
-  onStatusFilterChange,
-  priorityFilter,
-  onPriorityFilterChange,
+  onChange, 
   children,
 }: SearchBarProps) {
   return (
@@ -31,14 +27,6 @@ export default function SearchBar({
         onChange={e => onChange(e.target.value)}
         className={styles.input}
       />
-
-      <TaskFilters
-        statusFilter={statusFilter}
-        onStatusFilterChange={onStatusFilterChange}
-        priorityFilter={priorityFilter}
-        onPriorityFilterChange={onPriorityFilterChange}
-      />
-
       {children}
     </div>
   );

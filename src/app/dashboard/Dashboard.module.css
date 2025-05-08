@@ -1,74 +1,76 @@
 .dashboard {
-    max-width: 1000px;
-    margin: 2rem auto;
-    padding: 1rem;
-    color: white;
-  }
-  
-  .title {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-  
-  .form {
-    margin-bottom: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    background-color: #1a1a1a;
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 0 10px #0c0c0c88;
-  }
-  
-  .input,
-  .textarea {
-    padding: 0.75rem;
-    background-color: #121212;
-    border: 1px solid #2e2e2e;
-    border-radius: 10px;
-    font-size: 1rem;
-    color: #e2e8f0;
-  }
-  
-  .input::placeholder,
-  .textarea::placeholder {
-    color: #6b7280;
-  }
-  
-  .textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
-  .button {
-    background: linear-gradient(to right, #2563eb, #3b82f6);
-    color: white;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s ease-in-out;
-  }
-  
-  .button:hover {
-    background: linear-gradient(to right, #1d4ed8, #2563eb);
-  }
-  
-  .error {
-    color: #ef4444;
-    font-size: 0.875rem;
-  }
-  
-  .taskList {
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .empty {
-    font-style: italic;
-    opacity: 0.7;
-  }
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1rem;
+  color: var(--foreground);
+}
+
+.title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.form {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background-color: var(--card-bg);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px var(--shadow);
+  transition: border-color 0.3s, background-color 0.3s;
+
+}
+
+.input,
+.textarea {
+  padding: 0.75rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 10px;
+  font-size: 1rem;
+  color: var(--input-text);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--placeholder);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.button {
+  background: linear-gradient(to right, #2563eb, #3b82f6);
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.button:hover {
+  background: linear-gradient(to right, #1d4ed8, #2563eb);
+}
+
+.error {
+  color: #ef4444;
+  font-size: 0.875rem;
+}
+
+.taskList {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.empty {
+  font-style: italic;
+  opacity: 0.7;
+}
