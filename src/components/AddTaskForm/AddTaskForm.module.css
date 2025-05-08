@@ -1,99 +1,102 @@
 .wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  
-  .fab {
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0.6rem 1rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .fab:hover {
-    background-color: #1e4fd6;
-  }
-  
-  .formWrapper {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    margin-top: 0.5rem;
-    background: #1a1a1a;
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    z-index: 10;
-    width: 320px;
-    display: none;
-  }
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
 
-  .formWrapper form {
-    display: flex;
-    flex-direction: column;
-    gap: 13px;
+.fab {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.fab:hover {
+  background-color: #1e4fd6;
+}
+
+.formWrapper {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: var(--background);
+  color: var(--foreground);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  width: 320px;
+  display: none;
+}
+
+.formWrapper form {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.formWrapper.open {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
   }
-  
-  .formWrapper.open {
-    display: block;
-    animation: fadeIn 0.3s ease;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-5px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .form input,
-  .form textarea,
-  .form select {
-    width: 100%;
-    padding: 0.6rem;
-    background: #121212;
-    border: 1px solid #333;
-    color: #fff;
-    border-radius: 8px;
-    font-size: 0.95rem;
-  }
-  
-  .form textarea {
-    resize: vertical;
-    min-height: 80px;
-  }
-  
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0.8rem;
-  }
-  
-  .buttons button {
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-size: 0.9rem;
-  }
-  
-  .buttons button[type='submit'] {
-    background: #2563eb;
-    color: white;
-  }
-  
-  .buttons button[type='button'] {
-    background: #444;
-    color: white;
-  }
-  
+}
+
+.form input,
+.form textarea,
+.form select {
+  width: 100%;
+  padding: 0.6rem;
+  background: var(--input-bg, #121212);
+  border: 1px solid var(--input-border, #333);
+  color: var(--foreground);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s, background-color 0.3s;
+
+}
+
+.form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.8rem;
+}
+
+.buttons button {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.buttons button[type='submit'] {
+  background: #2563eb;
+  color: white;
+}
+
+.buttons button[type='button'] {
+  background: var(--input-border);
+  color: var(--foreground);
+}

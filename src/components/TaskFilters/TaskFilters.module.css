@@ -1,25 +1,26 @@
 .filters {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .label {
-    font-weight: bold;
-    color: white;
-  }
-  
-  .selects {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  
-  .select {
-    padding: 0.5rem;
-    border-radius: 6px;
-    background-color: #111;
-    color: white;
-    border: 1px solid #333;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-weight: bold;
+  color: var(--foreground);
+}
+
+.selects {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.select {
+  padding: 0.5rem;
+  border-radius: 6px;
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
+  transition: border-color 0.3s, background-color 0.3s;
+
+}

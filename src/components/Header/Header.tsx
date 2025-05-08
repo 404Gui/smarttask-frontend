@@ -1,8 +1,8 @@
-// components/Header/Header.tsx
 'use client'
 import styles from './Header.module.css';
 import { useAuth } from '@/context/AuthContext';
 import UserMenu from './UserMenu/UserMenu';
+import ThemeToggle from './ThemeToggle/ThemeToggle';
 
 export default function Header() {
   const { user, loading } = useAuth();
@@ -11,6 +11,7 @@ export default function Header() {
     <header className={styles.header}>
       <h2 className={styles.logo}>Taskoom</h2>
       <div className={styles.userSection}>
+        <ThemeToggle />
         {loading ? (
           <span className={styles.greeting}>Carregando...</span>
         ) : user ? (
