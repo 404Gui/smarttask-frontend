@@ -139,7 +139,7 @@ export default function DashboardPage() {
 
   return (
     <>
-      <Header userName="Fulano" />
+      <Header/>
 
       <main className={styles.dashboard}>
         <h1 className={styles.title}>Suas Tarefas</h1>
