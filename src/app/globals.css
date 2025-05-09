@@ -3,6 +3,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --droppable-hover: #e0e0e0;
+  --hover-bg: #f0f4ff;
+  --dropzone-bg: #e0f7ff;
+
 
   --card-bg: #f9f9f9;
   --input-bg: #ffffff;
@@ -35,6 +39,7 @@ body[data-theme='dark'] {
   --muted: #aaa;
   --divider: rgba(255, 255, 255, 0.08);
   --hover-bg: rgba(255, 255, 255, 0.04);
+  --droppable-hover: rgba(255, 255, 255, 0.08);
 }
 
 body {

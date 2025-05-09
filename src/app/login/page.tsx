@@ -7,7 +7,6 @@ import api from '@/services/api';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner';
 
 const loginSchema = z.object({
   username: z.string(),
@@ -52,7 +51,7 @@ export default function LoginPage() {
     }
   };
 
-  if (loading || user) return <LoadingSpinner/>;
+  // if (loading || user) return <LoadingOverlay show={true}/>;
 
   return (
     <main className="flex items-center justify-center min-h-screen">
