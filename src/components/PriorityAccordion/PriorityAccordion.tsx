@@ -16,18 +16,21 @@ const PriorityAccordion: FC<Props> = ({ priority, tasks, onDelete, onToggle, onE
   const capitalized = priority.charAt(0).toUpperCase() + priority.slice(1);
 
   return (
-    <details open className={styles.accordion}>
-      <summary className={styles.accordionHeader}>
-        {capitalized} prioridade ({tasks.length})
-      </summary>
-      {tasks.length === 0 ? (
-        <p className={styles.empty}>Nenhuma tarefa de prioridade {priority}.</p>
-      ) : (
-        tasks.map(task => (
-          <TaskItem key={task.id} task={task} onDelete={onDelete} onToggle={onToggle} onEdit={onEdit} />
-        ))
-      )}
-    </details>
+    <>
+
+      <details open className={styles.accordion}>
+        <summary className={styles.accordionHeader}>
+          {capitalized} prioridade ({tasks.length})
+        </summary>
+        {tasks.length === 0 ? (
+          <p className={styles.empty}>Nenhuma tarefa de prioridade {priority}.</p>
+        ) : (
+          tasks.map(task => (
+            <TaskItem key={task.id} task={task} onDelete={onDelete} onToggle={onToggle} onEdit={onEdit} />
+          ))
+        )}
+      </details>
+    </>
   );
 };
 

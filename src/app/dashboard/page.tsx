@@ -10,6 +10,7 @@ import Header from '@/components/Header/Header';
 import { Task } from '@/types/task';
 import PriorityAccordion from '@/components/PriorityAccordion/PriorityAccordion';
 import { toast } from 'sonner';
+import TaskFilters from '@/components/TaskFilters/TaskFilters';
 
 
 export default function DashboardPage() {
@@ -107,11 +108,11 @@ export default function DashboardPage() {
   });
 
   const priorityOrder: ('alta' | 'média' | 'baixa')[] = ['alta', 'média', 'baixa'];
-  
+
   const groupedTasks = priorityOrder.map(priority => ({
     priority,
     tasks: filteredTasks.filter(task => task.priority === priority)
-  }));  
+  }));
 
   const today = new Date();
 
@@ -142,7 +143,7 @@ export default function DashboardPage() {
       <Header/>
 
       <main className={styles.dashboard}>
-        <h1 className={styles.title}>Suas Tarefas</h1>
+
 
         <SearchBar
           query={query}
@@ -155,6 +156,15 @@ export default function DashboardPage() {
           <AddTaskForm onSubmit={createTask} />
         </SearchBar>
 
+        <div className={styles.taskToolBar}>
+          <h1 className={styles.title}>Suas Tarefas</h1>
+          <TaskFilters
+            statusFilter={statusFilter}
+            onStatusFilterChange={setStatusFilter}
+            priorityFilter={priorityFilter}
+            onPriorityFilterChange={setPriorityFilter}
+          />
+        </div>
 
         {sortedGroupedTasks.map(group => (
           <PriorityAccordion
