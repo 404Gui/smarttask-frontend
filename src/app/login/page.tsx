@@ -16,7 +16,7 @@ export default function LoginPage() {
     }
   }, [user, loading, router]);
 
-  if (loading) return <LoadingOverlay show={loading} />;
+  if (loading) return <LoadingOverlay show={loading} mensagem={"Autenticando usuário"} />;
 
   return (
     <AuthLayout title="Entrar">

@@ -8,10 +8,12 @@ import Cookies from "js-cookie";
 import api from "@/services/api";
 import { useAuth } from "@/context/AuthContext";
 import LoadingOverlay from "@/components/LoadingOverlay/LoadingOverlay";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 const loginSchema = z.object({
-  username: z.string(),
+  email: z.string(),
   password: z.string(),
 });
 
@@ -25,6 +27,29 @@ export default function LoginForm() {
   const router = useRouter();
   const { setUser } = useAuth();
   const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const token = searchParams?.get("token");
+
+    const loginWithGoogle = async () => {
+      if (!token) return;
+
+      try {
+        Cookies.set("token", token);
+        const me = await api.get("/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUser(me.data);
+        router.push("/dashboard");
+      } catch (err) {
+        alert("Erro ao autenticar com Google");
+        console.error(err);
+      }
+    };
+
+    loginWithGoogle();
+  }, []);
 
   const onSubmit = async (data: LoginData) => {
     try {
@@ -49,13 +74,35 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-      <input {...register("username")} placeholder="Usuário" />
-      <input {...register("password")} placeholder="Senha" type="password" />
-      <button type="submit" onClick={() => {}}>
-        Entrar
-      </button>
-      <LoadingOverlay show={loading} mensagem={"Autenticando usuário"} />
-    </form>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <input {...register("email")} placeholder="Digite seu e-mail" />
+        <input {...register("password")} placeholder="Senha" type="password" />
+        <button type="submit" onClick={() => {}}>
+          Entrar
+        </button>
+        <button
+          onClick={() => {
+            window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google/login`;
+          }}
+          type="button"
+          className={styles.googleBtn}
+        >
+          <Image
+            src="https://auth-backend.smarttask.io/images/logo/google-icon.svg"
+            alt="Google"
+            width={20}
+            height={20}
+          />
+          Entrar com Google
+        </button>
+
+        <p className={styles.loginPrompt}>
+          Não tem cadastro? <a href="/login">Faça o registro</a>
+        </p>
+
+        <LoadingOverlay show={loading} mensagem={"Autenticando usuário"} />
+      </form>
+    </>
   );
 }

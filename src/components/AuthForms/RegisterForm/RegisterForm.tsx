@@ -78,7 +78,7 @@ export default function RegisterForm() {
         </button>
 
         <p className={styles.loginPrompt}>
-          Já tem uma conta? <a href="/login">Entre aqui</a>
+          Já tem uma conta? <a href="/login">Faça o login</a>
         </p>
       </form>
       <LoadingOverlay show={loading} mensagem={"Registrando novo usuario"} />
