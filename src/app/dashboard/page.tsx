@@ -254,7 +254,7 @@ export default function DashboardPage() {
   return (
     <>
       <Header />
-      <LoadingOverlay show={isLoading} />
+      <LoadingOverlay show={isLoading} mensagem={"Atualizando tarefa"} />
 
       <main className={styles.dashboard}>
         <SearchBar
