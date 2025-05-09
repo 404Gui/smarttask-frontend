@@ -1,9 +1,12 @@
-'use client';
-import { FC, useState, KeyboardEvent } from 'react';
-import styles from './TaskItem.module.css';
-import { Task } from '@/types/task';
-import { Trash2, Pencil, CalendarPlus2, CalendarX2 } from 'lucide-react';
-import { isBefore, isToday, parseISO} from 'date-fns';
+"use client";
+import { FC, useState } from "react";
+import styles from "./TaskItem.module.css";
+import { Task } from "@/types/task";
+import { CheckCircle, Trash2, GripVertical } from "lucide-react";
+import TaskDrawer from "./Drawer/TaskDrawer";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { DeleteConfirmDialog } from "../DeleteConfirmDialog/DeleteConfirmDialog";
 
 type Props = {
   task: Task;
@@ -13,114 +16,84 @@ type Props = {
 };
 
 const TaskItem: FC<Props> = ({ task, onDelete, onToggle, onEdit }) => {
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
-  const [isEditingDesc, setIsEditingDesc] = useState(false);
-  const [title, setTitle] = useState(task.title);
-  const [description, setDescription] = useState(task.description);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const handleTitleBlur = () => {
-    setIsEditingTitle(false);
-    if (title !== task.title) {
-      onEdit({ ...task, title });
-    }
+  const handleCardClick = () => {
+    setDrawerOpen(true);
   };
 
-  const handleDescBlur = () => {
-    setIsEditingDesc(false);
-    if (description !== task.description) {
-      onEdit({ ...task, description });
-    }
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: task.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition: "box-shadow 200ms, opacity 200ms, transform 200ms",
+    opacity: isDragging ? 0 : 1,
+    background: "var(--card-bg)",
+    color: "var(--foreground)",
+    borderRadius: "8px",
+    boxShadow: isDragging ? "0 2px 8px rgba(0,0,0,0.2)" : undefined,
   };
-
-  const handleTitleKey = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      (e.target as HTMLInputElement).blur();
-    }
-  };
-
-  const dueDate = task.due_date ? parseISO(task.due_date) : null;
-
-  const isOverdue = dueDate ? isBefore(dueDate, new Date()) && !isToday(dueDate) : false;
-  
-  const isDueToday = dueDate ? isToday(dueDate) : false;
-
-  const dateColor = isOverdue ? '#ff4d4d' : isDueToday ? '#ffc107' : '#4da6ff';
 
   return (
-    <div className={`${styles.taskRow} ${task.completed ? styles.completed : ''}`}>
-      <div className={styles.checkboxArea}>
-        <input
-          type="checkbox"
-          checked={task.completed}
-          onChange={() => onToggle(task)}
-          className={styles.checkbox}
-        />
-      </div>
-
-      <div className={styles.taskDetails}>
-        <div className={styles.taskHeader}>
-          {isEditingTitle ? (
-            <input
-              className={styles.taskTitleInput}
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              onBlur={handleTitleBlur}
-              onKeyDown={handleTitleKey}
-              autoFocus
-            />
-          ) : (
-            <h3
-              className={styles.taskTitle}
-              onClick={() => setIsEditingTitle(true)}
-              title="Clique para editar"
+    <>
+      <div
+        className={`${styles.taskRow} ${
+          task.completed ? styles.completed : ""
+        }`}
+        onClick={handleCardClick}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => e.key === "Enter" && handleCardClick()}
+        ref={setNodeRef}
+        style={style}
+      >
+        <div className={styles.left}>
+          <div className={styles.actions} onClick={(e) => e.stopPropagation()}>
+            <button
+              className="cursor-grab active:cursor-grabbing mr-2"
+              title="Arrastar tarefa"
+              {...listeners}
+              {...attributes}
             >
-              {task.title}
-              {/* <Pencil size={14} className={styles.editIcon} /> */}
-            </h3>
-          )}
-        </div>
+              <GripVertical size={20} />
+            </button>
+          </div>
 
-        {isEditingDesc ? (
-          <textarea
-            className={styles.taskDescriptionInput}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            onBlur={handleDescBlur}
-            autoFocus
-          />
-        ) : (
-          <p
-            className={styles.taskDescription}
-            onClick={() => setIsEditingDesc(true)}
-            title="Clique para editar"
+          <div
+            className={`${styles.checkbox} ${
+              task.completed ? styles.checked : ""
+            }`}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggle(task);
+            }}
+            title="Marcar como concluída"
           >
-            {task.description}
-            {/* <Pencil size={10} className={styles.editIcon} /> */}
-          </p>
-        )}
+            <CheckCircle size={20} strokeWidth={task.completed ? 2.5 : 1.5} />
+          </div>
 
-        <div className={styles.taskMetaGroup}>
-          <p className={styles.taskMeta}>
-            <CalendarPlus2 size={15} style={{ marginRight: '4px' }} /> Criação: {new Date(task.created_at).toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' })}
-          </p>          
-          {dueDate && (
-            <p className={styles.taskMeta}>
-              <CalendarX2 size={15} color={dateColor} style={{ marginRight: '4px' }} />
-              Vencimento: {dueDate.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' })}
-            </p>
-          )}
+          <h3 className={styles.title}>{task.title}</h3>
+        </div>
+
+        <div className={styles.actions} onClick={(e) => e.stopPropagation()}>
+          <DeleteConfirmDialog onConfirm={() => onDelete(task.id)} />
         </div>
       </div>
 
-      <div className={styles.taskActions}>
-        <button
-          onClick={() => onDelete(task.id)}
-          className={`${styles.button} ${styles.buttonDelete}`}
-        >
-          <Trash2 size={18} />
-        </button>
-      </div>
-    </div>
+      <TaskDrawer
+        task={task}
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        onEdit={onEdit}
+      />
+    </>
   );
 };
 
