@@ -21,7 +21,7 @@ import {
 } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import TaskItemOverlay from "@/components/TaskItem/TaskItemOverlay";
-import LoadingOverlay from "@/components/LoadingSpinner/LoadingOverlay";
+import LoadingOverlay from "@/components/LoadingOverlay/LoadingOverlay";
 
 export default function DashboardPage() {
   const [tasks, setTasks] = useState<Task[]>([]);

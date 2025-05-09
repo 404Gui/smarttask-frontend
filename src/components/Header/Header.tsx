@@ -3,6 +3,7 @@ import styles from './Header.module.css';
 import { useAuth } from '@/context/AuthContext';
 import UserMenu from './UserMenu/UserMenu';
 import ThemeToggle from './ThemeToggle/ThemeToggle';
+import LoadingOverlay from '../LoadingOverlay/LoadingOverlay';
 
 export default function Header() {
   const { user, loading } = useAuth();
@@ -13,7 +14,7 @@ export default function Header() {
       <div className={styles.userSection}>
         <ThemeToggle />
         {loading ? (
-          <span className={styles.greeting}>Carregando...</span>
+          <LoadingOverlay show={loading} />
         ) : user ? (
           <UserMenu />
         ) : (

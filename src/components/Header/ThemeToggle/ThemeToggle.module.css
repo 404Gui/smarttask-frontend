@@ -1,17 +1,18 @@
 .toggle {
-    background: transparent;
-    border: 1px solid var(--border-color, #444);
-    border-radius: 6px;
-    padding: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--foreground);
-    transition: background 0.2s ease, border 0.2s ease;
-  }
-  
-  .toggle:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-  }
-  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--toggle-bg);
+  color: var(--toggle-fg);
+  border: none;
+  border-radius: 25px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.toggle:hover {
+  transform: scale(1.05);
+}
+

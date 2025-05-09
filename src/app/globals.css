@@ -6,6 +6,8 @@
   --droppable-hover: #e0e0e0;
   --hover-bg: #f0f4ff;
   --dropzone-bg: #e0f7ff;
+  --toggle-bg: #ffe69c;
+  --toggle-fg: #7a4e00;
 
 
   --card-bg: #f9f9f9;
@@ -18,16 +20,21 @@
 }
 
 body[data-theme='light'] {
-  --background: #ffffff;
-  --foreground: #171717;
-  --card-bg: #f9f9f9;
+  --background: #f9fafb;       
+  --foreground: #111827;       
+  --card-bg: #ffffff;          
   --input-bg: #ffffff;
   --input-border: #d1d5db;
   --input-text: #1f2937;
   --muted: #6b7280;
   --divider: #e5e7eb;
-  --hover-bg: #f3f4f6;
+  --hover-bg: #f1f5f9;         
+  --droppable-hover: #dbeafe;  
+  --dropzone-bg: #eff6ff;      
+  --toggle-bg: #facc15;        
+  --toggle-fg: #78350f;
 }
+
 
 body[data-theme='dark'] {
   --background: #0a0a0a;
@@ -40,6 +47,8 @@ body[data-theme='dark'] {
   --divider: rgba(255, 255, 255, 0.08);
   --hover-bg: rgba(255, 255, 255, 0.04);
   --droppable-hover: rgba(255, 255, 255, 0.08);
+  --toggle-bg: #2c3e50;
+  --toggle-fg: #f1c40f;
 }
 
 body {
