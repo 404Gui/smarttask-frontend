@@ -3,14 +3,16 @@ import styles from "./LoadingOverlay.module.css";
 
 interface LoadingOverlayProps {
   show: boolean;
+  mensagem: string
 }
 
-const LoadingOverlay: FC<LoadingOverlayProps> = ({ show }) => {
+const LoadingOverlay: FC<LoadingOverlayProps> = ({ show, mensagem}) => {
   if (!show) return null;
 
   return (
     <div className={styles.overlay}>
       <div className={styles.spinner}></div>
+      {mensagem || 'Carregando...'}
     </div>
   );
 };
