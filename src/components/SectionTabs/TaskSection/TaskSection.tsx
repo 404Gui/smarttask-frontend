@@ -1,12 +1,12 @@
 "use client";
 import { FC, useState } from "react";
-import styles from "./TaskItem.module.css";
+import styles from "./TaskSection.module.css";
 import { Task } from "@/types/task";
 import { CheckCircle, Trash2, GripVertical } from "lucide-react";
 import TaskDrawer from "./Drawer/TaskDrawer";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { DeleteConfirmDialog } from "../DeleteConfirmDialog/DeleteConfirmDialog";
+import { DeleteConfirmDialog } from "../../DeleteConfirmDialog/DeleteConfirmDialog";
 
 type Props = {
   task: Task;

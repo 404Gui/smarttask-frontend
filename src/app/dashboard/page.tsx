@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import api from "@/services/api";
 import Cookies from "js-cookie";
-import TaskItem from "@/components/TaskItem/TaskItem";
+import TaskItem from "@/components/SectionTabs/TaskSection/TaskSection";
 import AddTaskForm from "@/components/AddTaskForm/AddTaskForm";
 import styles from "./Dashboard.module.css";
 import SearchBar from "@/components/SearchBar/SearchBar";
@@ -11,6 +11,7 @@ import { Task } from "@/types/task";
 import PriorityAccordion from "@/components/PriorityAccordion/PriorityAccordion";
 import { toast } from "sonner";
 import TaskFilters from "@/components/TaskFilters/TaskFilters";
+import SectionTabs from "../../components/SectionTabs/SectionTabs";
 
 import {
   DndContext,
@@ -20,8 +21,9 @@ import {
   DragOverlay,
 } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import TaskItemOverlay from "@/components/TaskItem/TaskItemOverlay";
+import TaskItemOverlay from "@/components/SectionTabs/TaskSection/TaskItemOverlay";
 import LoadingOverlay from "@/components/LoadingOverlay/LoadingOverlay";
+import ListSection from "@/components/SectionTabs/ListSection/ListSection";
 
 export default function DashboardPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -31,6 +33,7 @@ export default function DashboardPage() {
   const [activeTask, setActiveTask] = useState<Task | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [section, setSection] = useState("tasks");
 
   const fetchTasks = async () => {
     try {
@@ -267,8 +270,9 @@ export default function DashboardPage() {
         >
           <AddTaskForm onSubmit={createTask} />
         </SearchBar>
+        <SectionTabs activeSection={section} onChange={setSection} />
 
-        <div className={styles.taskToolBar}>
+        {/* <div className={styles.taskToolBar}>
           <h1 className={styles.title}>Suas Tarefas</h1>
           <TaskFilters
             statusFilter={statusFilter}
@@ -276,7 +280,7 @@ export default function DashboardPage() {
             priorityFilter={priorityFilter}
             onPriorityFilterChange={setPriorityFilter}
           />
-        </div>
+        </div> */}
 
         <DndContext
           collisionDetection={closestCenter}
@@ -292,18 +296,49 @@ export default function DashboardPage() {
             {activeTask ? <TaskItemOverlay task={activeTask} /> : null}
           </DragOverlay>
 
-          {sortedGroupedTasks.map((group) => (
-            <PriorityAccordion
-              key={group.priority}
-              priority={group.priority}
-              tasks={group.tasks}
-              onDelete={deleteTask}
-              onToggle={toggleTask}
-              onEdit={editTask}
-              activeTask={activeTask}
-              overId={overId}
-            />
-          ))}
+          {section === "tasks" ? (
+            <>
+              <div className={styles.taskToolBar}>
+                <h1 className={styles.title}>Suas Tarefas</h1>
+                <TaskFilters
+                  statusFilter={statusFilter}
+                  onStatusFilterChange={setStatusFilter}
+                  priorityFilter={priorityFilter}
+                  onPriorityFilterChange={setPriorityFilter}
+                />
+              </div>
+
+              <DndContext
+                collisionDetection={closestCenter}
+                onDragStart={handleDragStart}
+                onDragOver={handleDragOver}
+                onDragEnd={(e) => {
+                  handleDragEnd(e);
+                  setActiveTask(null);
+                }}
+                modifiers={[restrictToVerticalAxis]}
+              >
+                <DragOverlay>
+                  {activeTask ? <TaskItemOverlay task={activeTask} /> : null}
+                </DragOverlay>
+
+                {sortedGroupedTasks.map((group) => (
+                  <PriorityAccordion
+                    key={group.priority}
+                    priority={group.priority}
+                    tasks={group.tasks}
+                    onDelete={deleteTask}
+                    onToggle={toggleTask}
+                    onEdit={editTask}
+                    activeTask={activeTask}
+                    overId={overId}
+                  />
+                ))}
+              </DndContext>
+            </>
+          ) : section === "lists" ? (
+            <ListSection />
+          ) : null}
         </DndContext>
       </main>
     </>

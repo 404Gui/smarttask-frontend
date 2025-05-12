@@ -1,0 +1,26 @@
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.tabs button {
+  background: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.tabs .active {
+  background-color: #0070f3;
+  color: white;
+}
+
+.tabs .disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

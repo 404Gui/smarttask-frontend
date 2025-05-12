@@ -1,6 +1,6 @@
 "use client";
 import { FC } from "react";
-import TaskItem from "../TaskItem/TaskItem";
+import TaskItem from "../SectionTabs/TaskSection/TaskSection";
 import styles from "./PriorityAccordion.module.css";
 import { Task } from "@/types/task";
 import { useDroppable } from "@dnd-kit/core";
