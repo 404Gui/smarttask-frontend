@@ -1,8 +1,8 @@
-import styles from './Drawer.module.css';
-import { X, Plus } from 'lucide-react';
+import styles from './CreateListDrawer.module.css';
+import { X, Plus, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { createList } from '@/services/lists';
-import { ListItem } from '@/types/list'; // Certifique-se de importar o tipo ListItem
+import { ListItem } from '@/types/list'; 
 
 interface DrawerProps {
   onClose: () => void;
@@ -13,7 +13,7 @@ interface DrawerProps {
 export default function Drawer({ onClose, onCreated, title = "Nova Lista" }: DrawerProps) {
   const [listTitle, setListTitle] = useState("");
   const [itemInput, setItemInput] = useState("");
-  const [items, setItems] = useState<ListItem[]>([]); // Mudei para ListItem
+  const [items, setItems] = useState<ListItem[]>([]); 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -21,7 +21,7 @@ export default function Drawer({ onClose, onCreated, title = "Nova Lista" }: Dra
     const trimmed = itemInput.trim();
     if (trimmed) {
       const newItem: ListItem = {
-        id: Date.now(), // Usando Date.now() para gerar um ID único temporário
+        id: Date.now(), 
         content: trimmed,
         checked: false,
       };
@@ -47,7 +47,7 @@ export default function Drawer({ onClose, onCreated, title = "Nova Lista" }: Dra
 
     try {
       setLoading(true);
-      // Aqui, estamos enviando os itens com a estrutura correta (id, content, checked)
+      
       await createList({ title: listTitle, items });
       setListTitle("");
       setItems([]);
@@ -64,13 +64,16 @@ export default function Drawer({ onClose, onCreated, title = "Nova Lista" }: Dra
 
   return (
     <div className={styles.overlay} onClick={onClose}>
-      <aside className={styles.drawer} onClick={e => e.stopPropagation()}>
+      <aside className={styles.drawer} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
           <h2>{title}</h2>
           <button onClick={onClose} className={styles.closeBtn}>
             <X size={20} />
           </button>
         </div>
+        <button type="button" className={styles.iaBtn} >
+          <Sparkles size={16} /> Gerar com ajuda da IA
+        </button>
 
         <form className={styles.body} onSubmit={handleSubmit}>
           <label htmlFor="title">Título da lista</label>
@@ -78,7 +81,7 @@ export default function Drawer({ onClose, onCreated, title = "Nova Lista" }: Dra
             type="text"
             id="title"
             value={listTitle}
-            onChange={e => setListTitle(e.target.value)}
+            onChange={(e) => setListTitle(e.target.value)}
             className={styles.input}
             placeholder="Ex: Compras do mês"
           />
@@ -89,7 +92,7 @@ export default function Drawer({ onClose, onCreated, title = "Nova Lista" }: Dra
               type="text"
               id="item"
               value={itemInput}
-              onChange={e => setItemInput(e.target.value)}
+              onChange={(e) => setItemInput(e.target.value)}
               className={styles.input}
               placeholder="Ex: Arroz"
             />
@@ -107,7 +110,11 @@ export default function Drawer({ onClose, onCreated, title = "Nova Lista" }: Dra
             {items.map((item, i) => (
               <li key={i} className={styles.item}>
                 <span>{item.content}</span>
-                <button type="button" onClick={() => removeItem(i)} className={styles.removeBtn}>
+                <button
+                  type="button"
+                  onClick={() => removeItem(i)}
+                  className={styles.removeBtn}
+                >
                   <X size={14} />
                 </button>
               </li>

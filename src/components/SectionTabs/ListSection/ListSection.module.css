@@ -1,16 +1,102 @@
 .container {
   margin-top: 2rem;
-  padding: 1rem;
-  background: var(--background);
-  border-radius: 12px;
+  padding: 1.5rem;
+  background: var(--card-bg);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
 
 .title {
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.newButton {
+  background: var(--foreground);
+  color: var(--background);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.newButton:hover {
+  background: var(--toggle-bg);
+  color: var(--toggle-fg);
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.card {
+  background: var(--input-bg);
+  border: 1px solid var(--divider);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.card h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--foreground);
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 0.9rem;
   margin-bottom: 1rem;
 }
 
+.cardActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cardActions button {
+  background: var(--toggle-bg);
+  color: var(--toggle-fg);
+  border: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.cardActions button:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
 .empty {
-  color: #666;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+  font-size: 0.95rem;
+  margin-top: 1rem;
 }

@@ -15,3 +15,16 @@ export const addItemToList = async (listId: number, itemData: ListItem) => {
   const response = await api.post(`/lists/${listId}/items`, itemData);
   return response.data;
 };
+
+export const updateList = async (
+  listId: number,
+  data: { title: string; items: ListItem[] }
+) => {
+  const response = await api.put(`/lists/${listId}`, data);
+  return response.data;
+};
+
+
+export const deleteList = async (listId: number) => {
+  await api.delete(`/lists/${listId}`);
+};

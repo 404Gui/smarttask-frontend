@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import api from "@/services/api";
 import Cookies from "js-cookie";
-import TaskItem from "@/components/SectionTabs/TaskSection/TaskSection";
 import AddTaskForm from "@/components/AddTaskForm/AddTaskForm";
 import styles from "./Dashboard.module.css";
 import SearchBar from "@/components/SearchBar/SearchBar";
@@ -12,6 +11,8 @@ import PriorityAccordion from "@/components/PriorityAccordion/PriorityAccordion"
 import { toast } from "sonner";
 import TaskFilters from "@/components/TaskFilters/TaskFilters";
 import SectionTabs from "../../components/SectionTabs/SectionTabs";
+import { List } from "@/types/list";
+import { getLists } from "@/services/lists";
 
 import {
   DndContext,
@@ -34,7 +35,21 @@ export default function DashboardPage() {
   const [overId, setOverId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [section, setSection] = useState("tasks");
+  const [lists, setLists] = useState<List[]>([]);
 
+  const fetchLists = async () => {
+    try {
+      const data = await getLists();
+      setLists(data);
+    } catch (error) {
+      console.error("Erro ao buscar listas", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+    fetchLists();
+  }, []);
   const fetchTasks = async () => {
     try {
       const token = Cookies.get("token");
@@ -272,16 +287,6 @@ export default function DashboardPage() {
         </SearchBar>
         <SectionTabs activeSection={section} onChange={setSection} />
 
-        {/* <div className={styles.taskToolBar}>
-          <h1 className={styles.title}>Suas Tarefas</h1>
-          <TaskFilters
-            statusFilter={statusFilter}
-            onStatusFilterChange={setStatusFilter}
-            priorityFilter={priorityFilter}
-            onPriorityFilterChange={setPriorityFilter}
-          />
-        </div> */}
-
         <DndContext
           collisionDetection={closestCenter}
           onDragStart={handleDragStart}
@@ -337,7 +342,7 @@ export default function DashboardPage() {
               </DndContext>
             </>
           ) : section === "lists" ? (
-            <ListSection />
+            <ListSection initialLists={lists} refreshLists={fetchLists} />
           ) : null}
         </DndContext>
       </main>

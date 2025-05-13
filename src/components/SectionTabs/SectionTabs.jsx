@@ -14,10 +14,7 @@ export default function SectionTabs({ activeSection, onChange }) {
         onClick={() => onChange('lists')}
       >
         Listas
-      </button>
-      <button disabled className={styles.disabled}>
-        IA (em breve)
-      </button>
+      </button>      
     </div>
   )
 }
