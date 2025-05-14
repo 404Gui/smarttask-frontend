@@ -5,6 +5,7 @@ import { List } from "@/types/list";
 import Drawer from "./Drawers/CreateListDrawer/CreateListDrawer";
 import ViewListDrawer from "./Drawers/ViewListDrawer/ViewListDrawer";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog/DeleteConfirmDialog";
+import { Trash2 } from "lucide-react";
 
 type ListSectionProps = {
   initialLists: List[];
@@ -38,8 +39,8 @@ export default function ListSection({
     if (!listToDelete) return;
     try {
       await deleteList(listToDelete.id);
-      setLists((prev) => prev.filter((l) => l.id !== listToDelete.id)); 
-      await refreshLists(); 
+      setLists((prev) => prev.filter((l) => l.id !== listToDelete.id));
+      await refreshLists();
     } catch (e) {
       console.error("Erro ao excluir", e);
     } finally {
@@ -65,20 +66,36 @@ export default function ListSection({
       ) : (
         <div className={styles.grid}>
           {lists.map((list) => (
-            <div key={list.id} className={styles.card}>
-              <h2>{list.title}</h2>
-              <p>{list.items.length} itens</p>
+            <div
+              key={list.id}
+              className={styles.card}
+              onClick={() => setSelectedList(list)}
+            >
+              <div className={styles.cardContent}>
+                <div
+                  className={styles.cardText}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setSelectedList(list)}
+                  onKeyDown={(e) => e.key === "Enter" && setSelectedList(list)}
+                >
+                  <h2 className={styles.cardTitle}>{list.title}</h2>
+                  <p className={styles.cardItems}>
+                    {list.items.length}{" "}
+                    {list.items.length === 1 ? "item" : "itens"}
+                  </p>
+                </div>
 
-              <div className={styles.cardActions}>
-                <button onClick={() => setSelectedList(list)}>Ver Lista</button>
                 <button
                   className={styles.deleteButton}
-                  onClick={() => {
+                  title="Excluir lista"
+                  onClick={(e) => {
+                    e.stopPropagation();
                     setListToDelete(list);
                     setConfirmOpen(true);
                   }}
                 >
-                  Excluir
+                  <Trash2 size={18} />
                 </button>
               </div>
             </div>

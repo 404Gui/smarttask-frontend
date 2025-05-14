@@ -51,6 +51,7 @@
   flex-direction: column;
   justify-content: space-between;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
 }
 
 .card:hover {
@@ -76,21 +77,8 @@
   gap: 0.5rem;
 }
 
-.cardActions button {
-  background: var(--toggle-bg);
-  color: var(--toggle-fg);
-  border: none;
-  padding: 0.4rem 0.75rem;
-  border-radius: 0.5rem;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.cardActions button:hover {
-  background: var(--foreground);
-  color: var(--background);
+.deleteButton:hover {
+  background: rgba(239, 68, 68, 0.1);
 }
 
 .empty {
@@ -99,4 +87,44 @@
   text-align: center;
   font-size: 0.95rem;
   margin-top: 1rem;
+}
+
+.cardContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cardTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.25rem;
+  word-break: break-word;
+}
+
+.cardItems {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.deleteButton {
+  background: transparent;
+  border: none;
+  color: var(--danger, #ef4444);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.deleteButton:hover {
+  background: rgba(239, 68, 68, 0.1);
 }
