@@ -8,38 +8,20 @@ import DeleteConfirmDialog from "@/components/DeleteConfirmDialog/DeleteConfirmD
 import { Trash2 } from "lucide-react";
 
 type ListSectionProps = {
-  initialLists: List[];
+  lists: List[];
   refreshLists: () => void;
 };
 
-export default function ListSection({
-  initialLists,
-  refreshLists,
-}: ListSectionProps) {
-  const [lists, setLists] = useState<List[]>(initialLists);
+export default function ListSection({ lists, refreshLists }: ListSectionProps) {
   const [showDrawer, setShowDrawer] = useState(false);
   const [selectedList, setSelectedList] = useState<List | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [listToDelete, setListToDelete] = useState<List | null>(null);
 
-  const fetchLists = async () => {
-    try {
-      const data = await getLists();
-      setLists(data);
-    } catch (error) {
-      console.error("Erro ao buscar listas", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchLists();
-  }, []);
-
   const handleDeleteList = async () => {
     if (!listToDelete) return;
     try {
       await deleteList(listToDelete.id);
-      setLists((prev) => prev.filter((l) => l.id !== listToDelete.id));
       await refreshLists();
     } catch (e) {
       console.error("Erro ao excluir", e);
@@ -103,18 +85,16 @@ export default function ListSection({
         </div>
       )}
 
-      {showDrawer && (
-        <Drawer onClose={() => setShowDrawer(false)} onCreated={fetchLists} />
+     {showDrawer && (
+        <Drawer onClose={() => setShowDrawer(false)} onCreated={refreshLists} />
       )}
-
       {selectedList && (
         <ViewListDrawer
           list={selectedList}
           onClose={() => setSelectedList(null)}
-          onUpdated={fetchLists}
+          onUpdated={refreshLists}
         />
       )}
-
       <DeleteConfirmDialog
         open={confirmOpen}
         onOpenChange={setConfirmOpen}

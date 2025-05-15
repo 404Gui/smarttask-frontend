@@ -1,33 +1,32 @@
 "use client";
 import { useEffect, useState } from "react";
-import api from "@/services/api";
 import Cookies from "js-cookie";
-import AddTaskForm from "@/components/AddTaskForm/AddTaskForm";
 import styles from "./Dashboard.module.css";
-import SearchBar from "@/components/SearchBar/SearchBar";
-import Header from "@/components/Header/Header";
-import { Task } from "@/types/task";
-import PriorityAccordion from "@/components/PriorityAccordion/PriorityAccordion";
+import api from "@/services/api";
 import { toast } from "sonner";
+import { Task } from "@/types/task";
+import Header from "@/components/Header/Header";
+import SearchBar from "@/components/SearchBar/SearchBar";
+import AddTaskForm from "@/components/AddTaskForm/AddTaskForm";
 import TaskFilters from "@/components/TaskFilters/TaskFilters";
-import SectionTabs from "../../components/SectionTabs/SectionTabs";
-import { List } from "@/types/list";
-import { getLists } from "@/services/lists";
+import PriorityAccordion from "@/components/PriorityAccordion/PriorityAccordion";
+import SectionTabs from "@/components/SectionTabs/SectionTabs";
+import ListSection from "@/components/SectionTabs/ListSection/ListSection";
+import LoadingOverlay from "@/components/LoadingOverlay/LoadingOverlay";
+import TaskItemOverlay from "@/components/SectionTabs/TaskSection/TaskItemOverlay";
 
 import {
   DndContext,
-  closestCenter,
-  DragEndEvent,
-  DragStartEvent,
   DragOverlay,
+  DragStartEvent,
+  DragEndEvent,
+  closestCenter,
 } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import TaskItemOverlay from "@/components/SectionTabs/TaskSection/TaskItemOverlay";
-import LoadingOverlay from "@/components/LoadingOverlay/LoadingOverlay";
-import ListSection from "@/components/SectionTabs/ListSection/ListSection";
+
+import { useAppStore } from "@/stores/useAppStore";
 
 export default function DashboardPage() {
-  const [tasks, setTasks] = useState<Task[]>([]);
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("todas");
   const [priorityFilter, setPriorityFilter] = useState("todas");
@@ -35,94 +34,25 @@ export default function DashboardPage() {
   const [overId, setOverId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [section, setSection] = useState<"tasks" | "lists">("tasks");
-  const [lists, setLists] = useState<List[]>([]);
 
-  const fetchLists = async () => {
-    try {
-      const data = await getLists();
-      setLists(data);
-    } catch (error) {
-      console.error("Erro ao buscar listas", error);
-    }
-  };
+  const {
+    tasks,
+    lists,
+    fetchTasks,
+    fetchLists,
+    addTask,
+    updateTask,
+    deleteTask,
+    createTask,
+    editTask,
+    toggleTask,
+    setTasks,
+  } = useAppStore();
 
   useEffect(() => {
     fetchTasks();
     fetchLists();
   }, []);
-  const fetchTasks = async () => {
-    try {
-      const token = Cookies.get("token");
-      const res = await api.get("/tasks", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setTasks(res.data);
-    } catch (err) {
-      console.error("Erro ao buscar tarefas");
-    }
-  };
-
-  const createTask = async (data: {
-    title: string;
-    description: string;
-    priority: string;
-  }) => {
-    try {
-      const token = Cookies.get("token");
-      const res = await api.post("/tasks", data, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setTasks((prev) => [...prev, res.data]);
-      toast.success("Tarefa adicionada!");
-    } catch (err) {
-      console.error("Erro ao criar tarefa");
-      toast.error(
-        "Ops! Isso não era pra ter acontecido. Entre em contato com o administrador."
-      );
-    }
-  };
-
-  const editTask = async (updatedTask: Task) => {
-    try {
-      const token = Cookies.get("token");
-      const res = await api.put(`/tasks/${updatedTask.id}`, updatedTask, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setTasks((prev) =>
-        prev.map((t) => (t.id === updatedTask.id ? res.data : t))
-      );
-      toast.success("Tarefa atualizada!");
-    } catch (err) {
-      console.error("Erro ao editar tarefa");
-      toast.error("Não foi possível editar a tarefa.");
-    }
-  };
-
-  const deleteTask = async (id: number) => {
-    try {
-      const token = Cookies.get("token");
-      await api.delete(`/tasks/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setTasks((prev) => prev.filter((task) => task.id !== id));
-    } catch (err) {
-      console.error("Erro ao deletar tarefa");
-    }
-  };
-
-  const toggleTask = async (task: Task) => {
-    try {
-      const token = Cookies.get("token");
-      const res = await api.put(
-        `/tasks/${task.id}`,
-        { completed: !task.completed },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setTasks((prev) => prev.map((t) => (t.id === task.id ? res.data : t)));
-    } catch (err) {
-      console.error("Erro ao atualizar tarefa");
-    }
-  };
 
   const filteredTasks = tasks.filter((task) => {
     const matchesQuery = task.title.toLowerCase().includes(query.toLowerCase());
@@ -177,10 +107,6 @@ export default function DashboardPage() {
       priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority)
     );
   });
-
-  useEffect(() => {
-    fetchTasks();
-  }, []);
 
   const handleDragStart = (event: DragStartEvent) => {
     const taskId = Number(event.active.id);
@@ -285,6 +211,7 @@ export default function DashboardPage() {
         >
           <AddTaskForm onSubmit={createTask} />
         </SearchBar>
+        
         <SectionTabs activeSection={section} onChange={setSection} />
 
         <DndContext
@@ -313,36 +240,21 @@ export default function DashboardPage() {
                 />
               </div>
 
-              <DndContext
-                collisionDetection={closestCenter}
-                onDragStart={handleDragStart}
-                onDragOver={handleDragOver}
-                onDragEnd={(e) => {
-                  handleDragEnd(e);
-                  setActiveTask(null);
-                }}
-                modifiers={[restrictToVerticalAxis]}
-              >
-                <DragOverlay>
-                  {activeTask ? <TaskItemOverlay task={activeTask} /> : null}
-                </DragOverlay>
-
-                {sortedGroupedTasks.map((group) => (
-                  <PriorityAccordion
-                    key={group.priority}
-                    priority={group.priority}
-                    tasks={group.tasks}
-                    onDelete={deleteTask}
-                    onToggle={toggleTask}
-                    onEdit={editTask}
-                    activeTask={activeTask}
-                    overId={overId}
-                  />
-                ))}
-              </DndContext>
+              {sortedGroupedTasks.map((group) => (
+                <PriorityAccordion
+                  key={group.priority}
+                  priority={group.priority}
+                  tasks={group.tasks}
+                  onDelete={deleteTask}
+                  onToggle={toggleTask}
+                  onEdit={editTask}
+                  activeTask={activeTask}
+                  overId={overId}
+                />
+              ))}
             </>
           ) : section === "lists" ? (
-            <ListSection initialLists={lists} refreshLists={fetchLists} />
+            <ListSection lists={lists} refreshLists={fetchLists} />
           ) : null}
         </DndContext>
       </main>
