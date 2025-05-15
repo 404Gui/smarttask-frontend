@@ -116,6 +116,14 @@
   cursor: not-allowed;
 }
 
+.itemListSection {
+  margin-top: 1rem;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
 .itemList {
   margin-top: 1rem;
   list-style: none;
@@ -148,6 +156,11 @@
   color: red;
 }
 
+.empty {
+  color: #666;
+  font-style: italic;
+}
+
 .submitBtn {
   margin-top: auto;
   margin-bottom: 1rem;
@@ -172,3 +185,16 @@
   color: red;
   font-size: 0.9rem;
 }
+
+
+.formSection {
+  margin-bottom: 1.25rem;
+}
+
+.iaSection {
+  padding: 1rem;
+  border-bottom: 1px solid var(--divider);
+  background: var(--input-bg);
+}
+
+
