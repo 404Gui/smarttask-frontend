@@ -2,30 +2,34 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
   z-index: 1000;
   display: flex;
   justify-content: flex-end;
-  backdrop-filter: blur(2px);
 }
 
 .drawer {
+  width: 420px;
   background: var(--card-bg);
   color: var(--foreground);
-  width: 100%;
-  max-width: 420px;
   height: 100%;
-  box-shadow: -6px 0 20px rgba(0, 0, 0, 0.4);
+  padding: 32px;
   display: flex;
   flex-direction: column;
-  animation: slideIn 0.3s ease forwards;
+  border-radius: 12px 0 0 12px;
+  box-shadow: -6px 0 20px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.4s ease-out forwards;
+  overflow-y: auto;
 }
 
 @keyframes slideIn {
   from {
     transform: translateX(100%);
+    opacity: 0.4;
   }
   to {
-    transform: translateX(0%);
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
@@ -33,101 +37,169 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem;
-  border-bottom: 1px solid var(--divider);
+  margin-bottom: 24px;
 }
 
 .closeBtn {
-  background: transparent;
+  background: none;
   border: none;
   color: var(--muted);
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: color 0.2s;
 }
-
 .closeBtn:hover {
   color: var(--foreground);
 }
 
-.iaBtn {
+.body {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin: 1rem;
-  padding: 0.6rem 1rem;
-  font-size: 0.9rem;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.label {
+  font-size: 13px;
   font-weight: 500;
-  color: var(--toggle-fg);
+  color: var(--input-text);
+  margin-bottom: 4px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  font-size: 15px;
+  color: var(--input-text);
+  transition: border 0.2s;
+}
+.input:focus {
+  border-color: var(--foreground);
+  outline: none;
+}
+
+.iaSection {
+  padding: 20px;
+  background: var(--input-bg);
+  border-radius: 12px;
+  border: 1px solid var(--divider);
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+}
+
+.iaPreviewText {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.iaTryBtn {
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 500;
   background: var(--toggle-bg);
+  color: var(--toggle-fg);
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease;
 }
-
-.iaBtn:hover {
+.iaTryBtn:hover {
   background: var(--toggle-hover);
 }
 
-.body {
-  padding: 1rem;
-  overflow-y: auto;
-  flex: 1;
+.iaInputArea {
   display: flex;
   flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.3s ease;
 }
 
-.input {
-  padding: 0.6rem 0.75rem;
-  border: 1px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--input-text);
-  border-radius: 0.5rem;
+.iaLabel {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--foreground);
+}
+
+.iaTextarea {
   width: 100%;
-  font-size: 0.95rem;
-  margin-top: 0.5rem;
+  min-height: 80px;
+  padding: 12px 14px;
+  background: var(--background);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--input-text);
+  resize: vertical;
+  transition: border 0.2s;
+}
+.iaTextarea:focus {
+  border-color: var(--foreground);
+  outline: none;
 }
 
-.label {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--muted);
-}
-
-.itemInputGroup {
+.iaSubmitBtn {
+  align-self: flex-start;
   display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-
-.addItemBtn {
-  padding: 0.5rem;
-  background: var(--toggle-bg);
-  color: var(--toggle-fg);
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  background: linear-gradient(135deg, var(--foreground), #333);
+  color: var(--background);
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease;
 }
+.iaSubmitBtn:hover {
+  background: var(--foreground);
+}
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.itemInputGroup {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.addItemBtn {
+  padding: 10px;
+  background: var(--foreground);
+  color: var(--background);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.addItemBtn:hover {
+  background: var(--toggle-hover);
+}
 .addItemBtn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.itemListSection {
-  margin-top: 1rem;
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-
 .itemList {
-  margin-top: 1rem;
   list-style: none;
   padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   max-height: 160px;
   overflow-y: auto;
 }
@@ -137,64 +209,47 @@
   justify-content: space-between;
   align-items: center;
   background: var(--input-bg);
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
+  padding: 10px 12px;
+  border-radius: 8px;
   border: 1px solid var(--divider);
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
+  font-size: 14px;
 }
 
 .removeBtn {
-  background: transparent;
+  background: none;
   border: none;
   color: var(--muted);
   cursor: pointer;
   transition: color 0.2s;
 }
-
 .removeBtn:hover {
   color: red;
 }
 
 .empty {
-  color: #666;
+  color: var(--muted);
   font-style: italic;
+  font-size: 12px;
+  padding: 8px 0;
 }
 
 .submitBtn {
-  margin-top: auto;
-  margin-bottom: 1rem;
-  padding: 0.75rem;
-  background: var(--foreground);
+  background: linear-gradient(135deg, var(--foreground), #333);
   color: var(--background);
+  padding: 14px;
+  border-radius: 8px;
   border: none;
-  border-radius: 0.5rem;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 0.95rem;
   transition: background 0.2s ease;
+  margin-top: auto;
 }
-
 .submitBtn:hover {
-  background: var(--toggle-bg);
-  color: var(--toggle-fg);
+  background: var(--foreground);
 }
 
 .error {
-  margin-top: 0.75rem;
+  margin-top: 8px;
   color: red;
-  font-size: 0.9rem;
+  font-size: 13px;
 }
-
-
-.formSection {
-  margin-bottom: 1.25rem;
-}
-
-.iaSection {
-  padding: 1rem;
-  border-bottom: 1px solid var(--divider);
-  background: var(--input-bg);
-}
-
-

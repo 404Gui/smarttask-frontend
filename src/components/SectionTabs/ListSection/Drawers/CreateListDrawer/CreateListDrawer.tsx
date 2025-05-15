@@ -20,6 +20,7 @@ export default function Drawer({
   const [items, setItems] = useState<ListItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [iaMode, setIaMode] = useState(false);
 
   const addItem = () => {
     const trimmed = itemInput.trim();
@@ -77,16 +78,42 @@ export default function Drawer({
         </header>
 
         <section className={styles.iaSection}>
-          <button type="button" className={styles.iaBtn}>
-            <Sparkles size={16} />
-            Peça pra IA
-          </button>
-          {/* campo pra i.a */}
+          {!iaMode ? (
+            <>
+              <p className={styles.iaPreviewText}>
+                Deixe a IA te ajudar a criar uma lista personalizada.
+              </p>
+              <button
+                type="button"
+                className={styles.iaTryBtn}
+                onClick={() => setIaMode(true)}
+              >
+                ✨ Experimentar IA
+              </button>
+            </>
+          ) : (
+            <div className={styles.iaInputArea}>
+              <label htmlFor="iaInput" className={styles.iaLabel}>
+                Descreva o que você precisa:
+              </label>
+              <textarea
+                id="iaInput"
+                className={styles.iaTextarea}
+                placeholder="Ex: Crie uma lista de viagem com roupas, documentos, carregador..."
+              />
+              <button type="button" className={styles.iaSubmitBtn}>
+                <Sparkles size={16} />
+                Gerar com IA
+              </button>
+            </div>
+          )}
         </section>
 
         <form className={styles.body} onSubmit={handleSubmit}>
           <section className={styles.formSection}>
-            <label htmlFor="title">Título da lista</label>
+            <label htmlFor="title" className={styles.label}>
+              Título da lista
+            </label>
             <input
               type="text"
               id="title"
@@ -98,7 +125,9 @@ export default function Drawer({
           </section>
 
           <section className={styles.formSection}>
-            <label htmlFor="item">Adicionar itens</label>
+            <label htmlFor="item" className={styles.label}>
+              Adicionar itens
+            </label>
             <div className={styles.itemInputGroup}>
               <input
                 type="text"
@@ -120,7 +149,7 @@ export default function Drawer({
           </section>
 
           <section className={styles.itemListSection}>
-            <label>Itens adicionados</label>
+            <label className={styles.label}>Itens adicionados</label>
             {items.length > 0 ? (
               <ul className={styles.itemList}>
                 {items.map((item, i) => (
