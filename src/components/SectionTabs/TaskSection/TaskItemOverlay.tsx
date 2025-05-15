@@ -1,6 +1,6 @@
 "use client";
 import { FC } from "react";
-import styles from "./TaskItem.module.css";
+import styles from "./TaskSection.module.css";
 import { Task } from "@/types/task";
 import { CheckCircle, GripVertical } from "lucide-react";
 

@@ -1,12 +1,12 @@
 "use client";
 import { FC, useState } from "react";
-import styles from "./TaskItem.module.css";
+import styles from "./TaskSection.module.css";
 import { Task } from "@/types/task";
 import { CheckCircle, Trash2, GripVertical } from "lucide-react";
 import TaskDrawer from "./Drawer/TaskDrawer";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { DeleteConfirmDialog } from "../DeleteConfirmDialog/DeleteConfirmDialog";
+import DeleteConfirmDialog from "@/components/DeleteConfirmDialog/DeleteConfirmDialog";
 
 type Props = {
   task: Task;
@@ -17,6 +17,7 @@ type Props = {
 
 const TaskItem: FC<Props> = ({ task, onDelete, onToggle, onEdit }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   const handleCardClick = () => {
     setDrawerOpen(true);
@@ -83,7 +84,21 @@ const TaskItem: FC<Props> = ({ task, onDelete, onToggle, onEdit }) => {
         </div>
 
         <div className={styles.actions} onClick={(e) => e.stopPropagation()}>
-          <DeleteConfirmDialog onConfirm={() => onDelete(task.id)} />
+          <button
+            className={styles.deleteButton}
+            title="Excluir tarefa"
+            onClick={() => setConfirmOpen(true)}
+          >
+            <Trash2 size={18} />
+          </button>
+
+          <DeleteConfirmDialog
+            open={confirmOpen}
+            onOpenChange={setConfirmOpen}
+            title={`Excluir tarefa "${task.title}"?`}
+            message="Essa ação não pode ser desfeita."
+            onConfirm={() => onDelete(task.id)}
+          />
         </div>
       </div>
 

@@ -98,7 +98,7 @@ export default function LoginForm() {
         </button>
 
         <p className={styles.loginPrompt}>
-          Não tem cadastro? <a href="/login">Faça o registro</a>
+          Não tem cadastro? <a href="/register">Faça o registro</a>
         </p>
 
         <LoadingOverlay show={loading} mensagem={"Autenticando usuário"} />

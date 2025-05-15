@@ -4,19 +4,23 @@ import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import { Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export function DeleteConfirmDialog({ onConfirm }: { onConfirm: () => void }) {
-  return (
-    <AlertDialog.Root>
-      <AlertDialog.Trigger asChild>
-        <button
-          className="p-2 rounded hover:bg-[var(--hover-bg)]"
-          title="Excluir tarefa"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <Trash2 size={18} />
-        </button>
-      </AlertDialog.Trigger>
+type DeleteConfirmDialogProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  title?: string;
+  message?: string;
+  onConfirm: () => void;
+};
 
+export default function DeleteConfirmDialog({
+  open,
+  onOpenChange,
+  title = 'Confirmar exclusão',
+  message = 'Tem certeza que deseja excluir? Essa ação não pode ser desfeita.',
+  onConfirm,
+}: DeleteConfirmDialogProps) {
+  return (
+    <AlertDialog.Root open={open} onOpenChange={onOpenChange}>
       <AlertDialog.Portal>
         <AlertDialog.Overlay className="fixed inset-0 bg-black/50 z-50" />
 
@@ -32,10 +36,10 @@ export function DeleteConfirmDialog({ onConfirm }: { onConfirm: () => void }) {
                 shadow-lg w-[90%] max-w-md border border-[var(--divider)]"
             >
               <AlertDialog.Title className="text-lg font-medium">
-                Confirmar exclusão
+                {title}
               </AlertDialog.Title>
               <AlertDialog.Description className="mt-2 text-sm text-[var(--muted)]">
-                Você tem certeza que deseja excluir esta tarefa? Essa ação não pode ser desfeita.
+                {message}
               </AlertDialog.Description>
 
               <div className="mt-6 flex justify-end gap-3">
@@ -45,9 +49,7 @@ export function DeleteConfirmDialog({ onConfirm }: { onConfirm: () => void }) {
                 >
                   Cancelar
                 </AlertDialog.Cancel>
-                <AlertDialog.Action
-                  asChild
-                >
+                <AlertDialog.Action asChild>
                   <button
                     onClick={onConfirm}
                     className="flex items-center gap-2 px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700"
