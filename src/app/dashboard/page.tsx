@@ -34,7 +34,7 @@ export default function DashboardPage() {
   const [activeTask, setActiveTask] = useState<Task | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [section, setSection] = useState("tasks");
+  const [section, setSection] = useState<"tasks" | "lists">("tasks");
   const [lists, setLists] = useState<List[]>([]);
 
   const fetchLists = async () => {

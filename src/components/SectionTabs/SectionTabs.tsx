@@ -1,6 +1,13 @@
 import styles from './SectionTabs.module.css'
 
-export default function SectionTabs({ activeSection, onChange }) {
+type Section = "tasks" | "lists"
+
+interface SectionTabsProps {
+  activeSection: Section,
+  onChange: (section: Section) => void
+}
+
+export default function SectionTabs({ activeSection, onChange } : SectionTabsProps) {
   return (
     <div className={styles.tabs}>
       <button
