@@ -201,17 +201,6 @@ export default function DashboardPage() {
       <LoadingOverlay show={isLoading} mensagem={"Atualizando tarefa"} />
 
       <main className={styles.dashboard}>
-        <SearchBar
-          query={query}
-          onChange={setQuery}
-          statusFilter={statusFilter}
-          onStatusFilterChange={setStatusFilter}
-          priorityFilter={priorityFilter}
-          onPriorityFilterChange={setPriorityFilter}
-        >
-          <AddTaskForm onSubmit={createTask} />
-        </SearchBar>
-        
         <SectionTabs activeSection={section} onChange={setSection} />
 
         <DndContext
@@ -230,6 +219,16 @@ export default function DashboardPage() {
 
           {section === "tasks" ? (
             <>
+              <SearchBar
+                query={query}
+                onChange={setQuery}
+                statusFilter={statusFilter}
+                onStatusFilterChange={setStatusFilter}
+                priorityFilter={priorityFilter}
+                onPriorityFilterChange={setPriorityFilter}
+              >
+                <AddTaskForm onSubmit={createTask} />
+              </SearchBar>
               <div className={styles.taskToolBar}>
                 <h1 className={styles.title}>Suas Tarefas</h1>
                 <TaskFilters

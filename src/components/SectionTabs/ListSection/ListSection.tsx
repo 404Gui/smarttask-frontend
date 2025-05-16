@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styles from "./ListSection.module.css";
-import { getLists, deleteList } from "@/services/lists";
+import { deleteList } from "@/services/lists";
 import { List } from "@/types/list";
 import Drawer from "./Drawers/CreateListDrawer/CreateListDrawer";
 import ViewListDrawer from "./Drawers/ViewListDrawer/ViewListDrawer";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog/DeleteConfirmDialog";
 import { Trash2 } from "lucide-react";
+import SearchListInput from "@/components/SearchListInput/SearchListInput";
 
 type ListSectionProps = {
   lists: List[];
@@ -17,6 +18,11 @@ export default function ListSection({ lists, refreshLists }: ListSectionProps) {
   const [selectedList, setSelectedList] = useState<List | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [listToDelete, setListToDelete] = useState<List | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredLists = lists.filter((list) =>
+    list.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleDeleteList = async () => {
     if (!listToDelete) return;
@@ -35,19 +41,28 @@ export default function ListSection({ lists, refreshLists }: ListSectionProps) {
     <section className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>Suas Listas</h1>
+      </div>
+
+      <SearchListInput
+        value={searchTerm}
+        onChange={setSearchTerm}
+        placeholder="Buscar listas..."
+      >
         <button
           onClick={() => setShowDrawer(true)}
           className={styles.newButton}
         >
           + Nova Lista
         </button>
-      </div>
+      </SearchListInput>
 
       {lists.length === 0 ? (
         <p className={styles.empty}>Você ainda não criou nenhuma lista.</p>
+      ) : filteredLists.length === 0 ? (
+        <p className={styles.empty}>Nenhuma lista encontrada.</p>
       ) : (
         <div className={styles.grid}>
-          {lists.map((list) => (
+          {filteredLists.map((list) => (
             <div
               key={list.id}
               className={styles.card}
@@ -85,7 +100,7 @@ export default function ListSection({ lists, refreshLists }: ListSectionProps) {
         </div>
       )}
 
-     {showDrawer && (
+      {showDrawer && (
         <Drawer onClose={() => setShowDrawer(false)} onCreated={refreshLists} />
       )}
       {selectedList && (

@@ -1,9 +1,7 @@
 .container {
   margin-top: 2rem;
   padding: 1.5rem;
-  background: var(--card-bg);
   border-radius: 1rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .header {
