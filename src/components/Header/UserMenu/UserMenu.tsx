@@ -26,7 +26,7 @@ export default function UserMenu() {
       {menuOpen && (
         <div className={styles.dropdownMenu}>
           <button onClick={() =>
-            router.push('/settings')}>
+            router.push('/dashboard/settings')}>
             Configurações</button>
           <button onClick={() => {
             logout();

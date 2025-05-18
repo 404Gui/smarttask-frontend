@@ -1,0 +1,41 @@
+.container {
+  background-color: var(--card-bg);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  padding: 0.5rem;
+  background: var(--input-bg);
+  color: var(--input-text);
+  border: 1px solid var(--input-border);
+  border-radius: 0.5rem;
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  background: var(--toggle-bg);
+  color: var(--toggle-fg);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--hover-bg);
+}
