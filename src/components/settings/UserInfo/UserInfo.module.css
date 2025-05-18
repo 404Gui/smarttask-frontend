@@ -1,0 +1,25 @@
+.container {
+  background-color: #1f1f1f;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #333;
+  flex: 1;
+  min-width: 250px;
+  max-width: 400px;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #dcdcdc;
+  margin-bottom: 1rem;
+}
+
+.infoText {
+  margin-bottom: 0.5rem;
+  color: #ccc;
+}
+
+.infoText strong {
+  color: #fff;
+}
