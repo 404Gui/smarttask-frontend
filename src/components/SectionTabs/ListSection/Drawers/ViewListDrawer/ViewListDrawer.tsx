@@ -8,7 +8,6 @@ import {
   ListChecks,
   Clock,
   CheckCircle,
-  ListTodo,
   ClipboardCheck,
   ClipboardList,
 } from "lucide-react";
@@ -160,7 +159,7 @@ export default function ViewListDrawer({
                 Itens pendentes
               </h4>
               <ul className={styles.itemList}>
-                {uncheckedItems.map((item, index) => (
+                {uncheckedItems.map((item) => (
                   <li key={item.id} className={styles.item}>
                     <button
                       type="button"
@@ -192,7 +191,7 @@ export default function ViewListDrawer({
                 Itens marcados
               </h4>
               <ul className={styles.itemList}>
-                {checkedItems.map((item, index) => (
+                {checkedItems.map((item) => (
                   <li key={item.id} className={styles.item}>
                     <button
                       type="button"

@@ -4,7 +4,7 @@ import { SunMoon } from 'lucide-react';
 import styles from './ThemeToggle.module.css';
 
 export default function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
+  const { toggleTheme } = useTheme();
 
   return (
     <button onClick={toggleTheme} className={styles.toggle} aria-label="Alternar tema">
