@@ -28,3 +28,8 @@ export const updateList = async (
 export const deleteList = async (listId: number) => {
   await api.delete(`/lists/${listId}`);
 };
+
+export const generateListFromText = async (text: string) => {
+  const response = await api.post('/lists/generate-from-text', { text });
+  return response.data;
+};
