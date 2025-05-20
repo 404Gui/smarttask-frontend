@@ -18,3 +18,12 @@ export const changePassword = async (
     new_password: newPassword,
   })
 }
+
+export const changeUsername = async (
+  newUserName: string
+) => {
+  await api.put('/change-username', {
+    new_username: newUserName,
+  })
+}
+
