@@ -1,8 +1,9 @@
 import styles from "./CreateListDrawer.module.css";
 import { X, Plus, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { createList } from "@/services/lists";
+import { createList, generateListFromText } from "@/services/lists";
 import { ListItem } from "@/types/list";
+import LoadingOverlay from "@/components/LoadingOverlay/LoadingOverlay";
 
 interface DrawerProps {
   onClose: () => void;
@@ -21,6 +22,7 @@ export default function Drawer({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [iaMode, setIaMode] = useState(false);
+  const [inputVal, setInputVal] = useState("");
 
   const addItem = () => {
     const trimmed = itemInput.trim();
@@ -67,6 +69,31 @@ export default function Drawer({
     }
   };
 
+ const handleGenerateList = async () => {
+  if (!inputVal.trim()) return;
+
+  try {
+    setLoading(true);
+    const novaLista = await generateListFromText(inputVal);
+    console.log("Lista gerada com IA:", novaLista);
+
+    setListTitle(novaLista.title);
+    setItems(novaLista.items.map((item: any) => ({
+      id: Date.now() + Math.random(),
+      content: item.content,
+      checked: item.checked ?? false,
+    })));
+    setIaMode(false);
+    setError("");
+  } catch (error) {
+    console.error("Erro ao gerar lista com IA:", error);
+    setError("Erro ao gerar lista com IA.");
+  } finally {
+    setLoading(false);
+  }
+};
+
+
   return (
     <div className={styles.overlay} onClick={onClose}>
       <aside className={styles.drawer} onClick={(e) => e.stopPropagation()}>
@@ -100,8 +127,15 @@ export default function Drawer({
                 id="iaInput"
                 className={styles.iaTextarea}
                 placeholder="Ex: Crie uma lista de viagem com roupas, documentos, carregador..."
+                value={inputVal}
+                onChange={(e) => setInputVal(e.target.value)}
               />
-              <button type="button" className={styles.iaSubmitBtn}>
+
+              <button
+                type="button"
+                className={styles.iaSubmitBtn}
+                onClick={handleGenerateList}
+              >
                 <Sparkles size={16} />
                 Gerar com IA
               </button>
@@ -173,7 +207,11 @@ export default function Drawer({
           {error && <p className={styles.error}>{error}</p>}
 
           <button type="submit" className={styles.submitBtn} disabled={loading}>
-            {loading ? "Criando..." : "Criar Lista"}
+            {loading ? (
+              <LoadingOverlay show={loading} mensagem={"Gerando lista"} />
+            ) : (
+              "Criar Lista"
+            )}
           </button>
         </form>
       </aside>

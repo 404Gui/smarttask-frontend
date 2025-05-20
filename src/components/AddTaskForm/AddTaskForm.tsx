@@ -46,7 +46,7 @@ export default function AddTaskForm({ onSubmit }: Props) {
     return (
         <div className={styles.wrapper}>
             <button onClick={() => setIsOpen(prev => !prev)} className={styles.fab}>
-                {isOpen ? 'Cancelar' : 'Adicionar'}
+                {isOpen ? 'Cancelar' : '+ Adicionar'}
             </button>
 
             <div className={`${styles.formWrapper} ${isOpen ? styles.open : ''}`}>
@@ -83,7 +83,6 @@ export default function AddTaskForm({ onSubmit }: Props) {
                     
                     <div className={styles.buttons}>
                         <button type="submit">Adicionar</button>
-                        <button type="button" onClick={() => setIsOpen(false)}>Cancelar</button>
                     </div>
                 </form>
             </div>

@@ -128,9 +128,9 @@ const TaskDrawer: FC<Props> = ({ task, open, onClose, onEdit }) => {
         </button>
 
         <div className={styles.futureActions}>
-          <button className={styles.actionButton}>🔔 Notificar-me</button>
+          {/* <button className={styles.actionButton}>🔔 Notificar-me</button>
           <button className={styles.actionButton}>📎 Anexar</button>
-          <button className={styles.actionButton}>👤 Atribuir</button>
+          <button className={styles.actionButton}>👤 Atribuir</button> */}
         </div>
       </div>
     </div>
