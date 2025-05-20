@@ -1,6 +1,4 @@
-// SearchBar.tsx
 'use client';
-import TaskFilters from '../TaskFilters/TaskFilters';
 import styles from './SearchBar.module.css';
 
 type SearchBarProps = {

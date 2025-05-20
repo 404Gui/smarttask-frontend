@@ -2,7 +2,7 @@
 import { FC, useState, useEffect } from 'react';
 import styles from './TaskDrawer.module.css';
 import { Task } from '@/types/task';
-import { AlertCircle, CalendarDays, CalendarPlus2, CalendarX2, Clock, X } from 'lucide-react';
+import { AlertCircle, CalendarDays, CalendarPlus2, Clock, X } from 'lucide-react';
 import {
   parseISO,
   isToday,

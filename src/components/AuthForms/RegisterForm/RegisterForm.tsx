@@ -35,9 +35,13 @@ export default function RegisterForm() {
       await api.post("/register", data);
       alert("Usuário registrado com sucesso!");
       router.push("/login");
-    } catch (err: any) {
-      console.error(err);
-      alert(err.response?.data?.detail || "Erro no registro");
+    } catch (err: unknown) {
+      if (err && typeof err === "object" && "response" in err) {
+        const axiosError = err as { response?: { data?: { detail?: string } } };
+        alert(axiosError.response?.data?.detail || "Erro no registro");
+      } else {
+        alert("Erro desconhecido");
+      }
     } finally {
       setLoading(false);
     }

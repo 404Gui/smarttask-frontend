@@ -28,7 +28,6 @@ const TaskItem: FC<Props> = ({ task, onDelete, onToggle, onEdit }) => {
     listeners,
     setNodeRef,
     transform,
-    transition,
     isDragging,
   } = useSortable({ id: task.id });
 

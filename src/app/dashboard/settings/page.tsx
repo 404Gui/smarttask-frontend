@@ -6,7 +6,6 @@ import api from "@/services/api";
 import { Toaster, toast } from "sonner";
 import Header from "@/components/Header/Header";
 import { ArrowLeft, Pencil, X } from "lucide-react";
-import { Router } from "next/router";
 
 export default function SettingsPage() {
   const [user, setUser] = useState<{
@@ -37,6 +36,7 @@ export default function SettingsPage() {
       setNewEmail("");
       setEditingEmail(false);
     } catch (err) {
+      console.log(err)
       toast.error("Erro ao solicitar troca de e-mail.");
     }
   };
@@ -51,6 +51,7 @@ export default function SettingsPage() {
       setPasswords({ current: "", new: "" });
       setEditingPassword(false);
     } catch (err) {
+      console.log(err)
       toast.error("Erro ao trocar a senha.");
     }
   };
@@ -64,6 +65,7 @@ export default function SettingsPage() {
       setNewUsername("");
       setEditingUsername(false);
     } catch (err) {
+      console.log(err)
       toast.error("Erro ao alterar usuário!.");
     }
   };

@@ -1,9 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import styles from "./Dashboard.module.css";
-import api from "@/services/api";
-import { toast } from "sonner";
 import { Task } from "@/types/task";
 import Header from "@/components/Header/Header";
 import SearchBar from "@/components/SearchBar/SearchBar";
@@ -20,6 +17,7 @@ import {
   DragOverlay,
   DragStartEvent,
   DragEndEvent,
+  DragOverEvent,
   closestCenter,
 } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
@@ -39,9 +37,7 @@ export default function DashboardPage() {
     tasks,
     lists,
     fetchTasks,
-    fetchLists,
-    addTask,
-    updateTask,
+    fetchLists,   
     deleteTask,
     createTask,
     editTask,
@@ -114,7 +110,7 @@ export default function DashboardPage() {
     if (task) setActiveTask(task);
   };
 
-  const handleDragOver = (event: any) => {
+  const handleDragOver = (event: DragOverEvent) => {
     const over = event.over;
     if (!over) {
       setOverId(null);
@@ -217,45 +213,46 @@ export default function DashboardPage() {
             {activeTask ? <TaskItemOverlay task={activeTask} /> : null}
           </DragOverlay>
 
-          {section === "tasks" ? (
-            <>
-              <div className={styles.taskToolBar}>
-                <h1 className={styles.title}>Suas Tarefas</h1>
-                
-              </div>
-              <SearchBar
-                query={query}
-                onChange={setQuery}
-                statusFilter={statusFilter}
-                onStatusFilterChange={setStatusFilter}
-                priorityFilter={priorityFilter}
-                onPriorityFilterChange={setPriorityFilter}
-              >
-                                <TaskFilters
+          <div key={section} className={styles.sectionContent}>
+            {section === "tasks" ? (
+              <>
+                <div className={styles.taskToolBar}>
+                  <h1 className={styles.title}>Suas Tarefas</h1>
+                </div>
+                <SearchBar
+                  query={query}
+                  onChange={setQuery}
                   statusFilter={statusFilter}
                   onStatusFilterChange={setStatusFilter}
                   priorityFilter={priorityFilter}
                   onPriorityFilterChange={setPriorityFilter}
-                />
-                <AddTaskForm onSubmit={createTask} />
-              </SearchBar>
+                >
+                  <TaskFilters
+                    statusFilter={statusFilter}
+                    onStatusFilterChange={setStatusFilter}
+                    priorityFilter={priorityFilter}
+                    onPriorityFilterChange={setPriorityFilter}
+                  />
+                  <AddTaskForm onSubmit={createTask} />
+                </SearchBar>
 
-              {sortedGroupedTasks.map((group) => (
-                <PriorityAccordion
-                  key={group.priority}
-                  priority={group.priority}
-                  tasks={group.tasks}
-                  onDelete={deleteTask}
-                  onToggle={toggleTask}
-                  onEdit={editTask}
-                  activeTask={activeTask}
-                  overId={overId}
-                />
-              ))}
-            </>
-          ) : section === "lists" ? (
-            <ListSection lists={lists} refreshLists={fetchLists} />
-          ) : null}
+                {sortedGroupedTasks.map((group) => (
+                  <PriorityAccordion
+                    key={group.priority}
+                    priority={group.priority}
+                    tasks={group.tasks}
+                    onDelete={deleteTask}
+                    onToggle={toggleTask}
+                    onEdit={editTask}
+                    activeTask={activeTask}
+                    overId={overId}
+                  />
+                ))}
+              </>
+            ) : section === "lists" ? (
+              <ListSection lists={lists} refreshLists={fetchLists} />
+            ) : null}
+          </div>
         </DndContext>
       </main>
     </>

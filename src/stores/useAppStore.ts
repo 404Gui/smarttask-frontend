@@ -36,7 +36,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       });
       set({ tasks: res.data });
     } catch (err) {
-      console.error("Erro ao buscar tarefas");
+      console.error(err)
     }
   },
 
@@ -45,7 +45,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       const data = await getLists();
       set({ lists: data });
     } catch (err) {
-      console.error("Erro ao buscar listas");
+      console.error(err)
     }
   },
 
@@ -71,7 +71,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
         tasks: state.tasks.filter((t) => t.id !== id),
       }));
     } catch (err) {
-      console.error("Erro ao deletar tarefa");
+      console.error(err)
     }
   },
 
@@ -84,7 +84,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       get().addTask(res.data);
       toast.success("Tarefa adicionada!");
     } catch (err) {
-      console.error("Erro ao criar tarefa");
+      console.error(err)
       toast.error("Não foi possível criar a tarefa.");
     }
   },
@@ -98,7 +98,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       get().updateTask(res.data);
       toast.success("Tarefa atualizada!");
     } catch (err) {
-      console.error("Erro ao editar tarefa");
+      console.error(err)
       toast.error("Não foi possível editar a tarefa.");
     }
   },
@@ -113,7 +113,7 @@ export const useAppStore = create<AppStore>((set, get) => ({
       );
       get().updateTask(res.data);
     } catch (err) {
-      console.error("Erro ao atualizar tarefa");
+      console.error(err)
     }
   },
 }));
