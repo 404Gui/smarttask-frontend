@@ -1,5 +1,7 @@
 .goBackBtn {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 4px;
   margin: 2rem;
   color: var(--muted);
   border-radius: 6px;

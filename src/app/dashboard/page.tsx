@@ -219,6 +219,10 @@ export default function DashboardPage() {
 
           {section === "tasks" ? (
             <>
+              <div className={styles.taskToolBar}>
+                <h1 className={styles.title}>Suas Tarefas</h1>
+                
+              </div>
               <SearchBar
                 query={query}
                 onChange={setQuery}
@@ -227,17 +231,14 @@ export default function DashboardPage() {
                 priorityFilter={priorityFilter}
                 onPriorityFilterChange={setPriorityFilter}
               >
-                <AddTaskForm onSubmit={createTask} />
-              </SearchBar>
-              <div className={styles.taskToolBar}>
-                <h1 className={styles.title}>Suas Tarefas</h1>
-                <TaskFilters
+                                <TaskFilters
                   statusFilter={statusFilter}
                   onStatusFilterChange={setStatusFilter}
                   priorityFilter={priorityFilter}
                   onPriorityFilterChange={setPriorityFilter}
                 />
-              </div>
+                <AddTaskForm onSubmit={createTask} />
+              </SearchBar>
 
               {sortedGroupedTasks.map((group) => (
                 <PriorityAccordion

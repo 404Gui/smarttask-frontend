@@ -76,7 +76,7 @@ export default function SettingsPage() {
         className={styles.goBackBtn}
         onClick={() => (window.location.href = "/dashboard")}
       >
-        <ArrowLeft size={16} />
+        <ArrowLeft size={20} />
         Voltar
       </button>
 
