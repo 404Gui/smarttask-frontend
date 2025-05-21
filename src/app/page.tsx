@@ -56,7 +56,7 @@ export default function Home() {
             <div className={styles.iconWrapper}>
               <Bell size={24} strokeWidth={1.5} />
             </div>
-            <h3>Lembretes eficazes</h3>
+            <h3>Lembretes eficazes (em breve)</h3>
             <p>Receba alertas para não esquecer o que realmente importa.</p>
           </div>
         </section>
