@@ -30,7 +30,7 @@ export default function UserMenu() {
             Configurações</button>
           <button onClick={() => {
             logout();
-            router.push('login')
+            router.push('/')
           }}>Sair</button>
         </div>
       )}

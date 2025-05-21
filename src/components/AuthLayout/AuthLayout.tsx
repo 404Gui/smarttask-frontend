@@ -31,10 +31,6 @@ export default function AuthLayout({ children, title }: Props) {
         <h2>{title}</h2>
         {children}
       </motion.div>
-
-      <footer className={styles.footer}>
-        Desenvolvido por Guilherme Pappi
-      </footer>
     </main>
   );
 }
