@@ -14,7 +14,7 @@ export default function Header() {
       <div className={styles.userSection}>
         <ThemeToggle />
         {loading ? (
-          <LoadingOverlay show={loading} />
+          <LoadingOverlay show={loading} mensagem='Autenticando usuário' />
         ) : user ? (
           <UserMenu />
         ) : (
