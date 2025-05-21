@@ -1,5 +1,5 @@
 import api from './api';
-import { List, ListItem } from '../types/list';
+import {ListItem } from '../types/list';
 
 export const getLists = async () => {
   const response = await api.get('/lists');

@@ -11,6 +11,16 @@ interface DrawerProps {
   title?: string;
 }
 
+interface GeneratedListItem {
+  content: string;
+  checked?: boolean;
+}
+
+interface GeneratedList {
+  title: string;
+  items: GeneratedListItem[];
+}
+
 export default function Drawer({
   onClose,
   onCreated,
@@ -69,30 +79,31 @@ export default function Drawer({
     }
   };
 
- const handleGenerateList = async () => {
-  if (!inputVal.trim()) return;
+  const handleGenerateList = async () => {
+    if (!inputVal.trim()) return;
 
-  try {
-    setLoading(true);
-    const novaLista = await generateListFromText(inputVal);
-    console.log("Lista gerada com IA:", novaLista);
+    try {
+      setLoading(true);
+      const novaLista = (await generateListFromText(inputVal)) as GeneratedList;
+      console.log("Lista gerada com IA:", novaLista);
 
-    setListTitle(novaLista.title);
-    setItems(novaLista.items.map((item: any) => ({
-      id: Date.now() + Math.random(),
-      content: item.content,
-      checked: item.checked ?? false,
-    })));
-    setIaMode(false);
-    setError("");
-  } catch (error) {
-    console.error("Erro ao gerar lista com IA:", error);
-    setError("Erro ao gerar lista com IA.");
-  } finally {
-    setLoading(false);
-  }
-};
-
+      setListTitle(novaLista.title);
+      setItems(
+        novaLista.items.map((item) => ({
+          id: Date.now() + Math.random(),
+          content: item.content,
+          checked: item.checked ?? false,
+        }))
+      );
+      setIaMode(false);
+      setError("");
+    } catch (error) {
+      console.error("Erro ao gerar lista com IA:", error);
+      setError("Erro ao gerar lista com IA.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.overlay} onClick={onClose}>

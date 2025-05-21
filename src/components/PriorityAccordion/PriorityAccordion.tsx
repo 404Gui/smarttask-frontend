@@ -26,7 +26,6 @@ const PriorityAccordion: FC<Props> = ({
   onDelete,
   onToggle,
   onEdit,
-  activeTask,
   overId,
 }) => {
   const capitalized = priority.charAt(0).toUpperCase() + priority.slice(1);
