@@ -24,6 +24,12 @@ export default function ListSection({ lists, refreshLists }: ListSectionProps) {
     list.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleCreated = (newList: List) => {
+    refreshLists();       
+    setShowDrawer(false); 
+    setSelectedList(newList);  
+  };
+
   const handleDeleteList = async () => {
     if (!listToDelete) return;
     try {
@@ -101,7 +107,10 @@ export default function ListSection({ lists, refreshLists }: ListSectionProps) {
       )}
 
       {showDrawer && (
-        <Drawer onClose={() => setShowDrawer(false)} onCreated={refreshLists} />
+        <Drawer
+          onClose={() => setShowDrawer(false)}
+          onCreated={handleCreated}  
+        />
       )}
       {selectedList && (
         <ViewListDrawer
