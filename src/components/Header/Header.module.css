@@ -10,6 +10,7 @@
   flex-wrap: nowrap;
   gap: 0.5rem;
   overflow-x: auto;
+  overflow: visible;
 }
 
 .left {
@@ -26,6 +27,7 @@
   min-width: 0;
   max-width: 100%;
   overflow-x: auto;
+  overflow: visible;
 }
 
 .logo {

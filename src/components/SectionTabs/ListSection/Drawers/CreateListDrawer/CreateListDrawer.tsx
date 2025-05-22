@@ -16,11 +16,6 @@ interface GeneratedListItem {
   checked?: boolean;
 }
 
-interface GeneratedList {
-  title: string;
-  items: GeneratedListItem[];
-}
-
 export default function Drawer({
   onClose,
   onCreated,
