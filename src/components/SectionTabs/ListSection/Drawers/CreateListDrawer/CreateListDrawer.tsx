@@ -2,12 +2,12 @@ import styles from "./CreateListDrawer.module.css";
 import { X, Plus, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { createList, generateListFromText } from "@/services/lists";
-import { ListItem } from "@/types/list";
+import { List, ListItem } from "@/types/list";
 import LoadingOverlay from "@/components/LoadingOverlay/LoadingOverlay";
 
 interface DrawerProps {
   onClose: () => void;
-  onCreated: () => void;
+  onCreated: (newList: List) => void;  
   title?: string;
 }
 
@@ -65,11 +65,13 @@ export default function Drawer({
     try {
       setLoading(true);
 
-      await createList({ title: listTitle, items });
-      setListTitle("");
-      setItems([]);
-      setError("");
-      onCreated();
+      const novaLista = await createList({ title: listTitle, items });
+      onCreated({
+        id: novaLista.id,
+        title: novaLista.title,
+        items: novaLista.items,
+      });
+
       onClose();
     } catch (err) {
       setError("Erro ao criar lista.");
@@ -80,30 +82,34 @@ export default function Drawer({
   };
 
   const handleGenerateList = async () => {
-    if (!inputVal.trim()) return;
+  if (!inputVal.trim()) return;
 
-    try {
-      setLoading(true);
-      const novaLista = (await generateListFromText(inputVal)) as GeneratedList;
-      console.log("Lista gerada com IA:", novaLista);
+  try {
+    setLoading(true);
+    const novaLista = (await generateListFromText(inputVal)) as List; 
 
-      setListTitle(novaLista.title);
-      setItems(
-        novaLista.items.map((item) => ({
-          id: Date.now() + Math.random(),
-          content: item.content,
-          checked: item.checked ?? false,
-        }))
-      );
-      setIaMode(false);
-      setError("");
-    } catch (error) {
-      console.error("Erro ao gerar lista com IA:", error);
-      setError("Erro ao gerar lista com IA.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    setListTitle(novaLista.title);
+    setItems(
+      novaLista.items.map((item) => ({
+        id: item.id,  
+        content: item.content,
+        checked: item.checked ?? false,
+      }))
+    );
+
+    setIaMode(false);
+    setError("");
+
+    onCreated(novaLista);  
+    onClose();
+
+  } catch (error) {
+    console.error("Erro ao gerar lista com IA:", error);
+    setError("Erro ao gerar lista com IA.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className={styles.overlay} onClick={onClose}>

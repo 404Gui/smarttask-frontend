@@ -8,7 +8,7 @@ export default function ThemeToggle() {
 
   return (
     <button onClick={toggleTheme} className={styles.toggle} aria-label="Alternar tema">
-      <SunMoon size={20} strokeWidth={1.5} />
+      <SunMoon size={15} strokeWidth={1.5} />
     </button>
   );
 }
