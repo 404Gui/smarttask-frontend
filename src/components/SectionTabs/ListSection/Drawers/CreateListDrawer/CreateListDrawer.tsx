@@ -11,10 +11,6 @@ interface DrawerProps {
   title?: string;
 }
 
-interface GeneratedListItem {
-  content: string;
-  checked?: boolean;
-}
 
 export default function Drawer({
   onClose,
