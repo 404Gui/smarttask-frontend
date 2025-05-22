@@ -57,6 +57,7 @@ const TaskItem: FC<Props> = ({ task, onDelete, onToggle, onEdit }) => {
         <div className={styles.left}>
           <div className={styles.actions} onClick={(e) => e.stopPropagation()}>
             <button
+              style={{ touchAction: "none" }}
               className="cursor-grab active:cursor-grabbing mr-2"
               title="Arrastar tarefa"
               {...listeners}
