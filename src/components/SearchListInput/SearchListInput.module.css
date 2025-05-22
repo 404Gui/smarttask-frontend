@@ -4,6 +4,8 @@
   gap: 8px;
   margin-bottom: 2.5rem;
   justify-content: space-between;
+  flex-wrap: wrap;
+
 }
 
 .searchBar {
