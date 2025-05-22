@@ -11,8 +11,6 @@ export default function UserMenu() {
 
   if (!user) return null;
 
-  console.log('ofo', user.username)
-
   return (
     <div className={styles.profileWrapper}>
       <div className={styles.avatar} onClick={() => setMenuOpen(!menuOpen)}>

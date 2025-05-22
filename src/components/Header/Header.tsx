@@ -10,8 +10,10 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <h2 className={styles.logo}>Taskoom</h2>
-      <div className={styles.userSection}>
+      <div className={styles.left}>
+        <h2 className={styles.logo}>Taskoom</h2>
+      </div>
+      <div className={styles.right}>
         <ThemeToggle />
         {loading ? (
           <LoadingOverlay show={loading} mensagem='Autenticando usuário' />

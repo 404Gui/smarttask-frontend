@@ -7,22 +7,31 @@
   border-bottom: 1px solid var(--foreground);
   color: var(--foreground);
   transition: border-color 0.3s, background-color 0.3s;
-
+  flex-wrap: wrap;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+.left {
+  flex: 1 1 auto;
+  min-width: 150px;
 }
 
-.userSection {
+.right {
   display: flex;
   align-items: center;
   gap: 1rem;
-  font-size: 1rem;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  min-width: 200px;
+  flex-wrap: wrap;
 }
 
+.logo {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: bold;
+  word-break: break-word;
+}
 
 .greeting {
   font-weight: 500;
+  font-size: 1rem;
 }
