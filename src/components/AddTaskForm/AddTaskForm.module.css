@@ -102,3 +102,10 @@
   background: var(--input-border);
   color: var(--foreground);
 }
+
+@media screen and (max-width: 405px) {
+  .formWrapper {
+    left: 0;
+  }
+  
+}
