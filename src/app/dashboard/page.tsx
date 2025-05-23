@@ -29,8 +29,9 @@ export default function DashboardPage() {
   const [priorityFilter, setPriorityFilter] = useState("todas");
   const [activeTask, setActiveTask] = useState<Task | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [, setIsLoading] = useState(false);
   const [section, setSection] = useState<"tasks" | "lists">("tasks");
+
 
   const {
     tasks,

@@ -24,7 +24,7 @@ export default function RegisterForm() {
     resolver: zodResolver(registerSchema),
   });
 
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
 
   const router = useRouter();
 

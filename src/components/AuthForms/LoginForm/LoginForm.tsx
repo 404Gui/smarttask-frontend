@@ -25,7 +25,7 @@ export default function LoginForm() {
 
   const router = useRouter();
   const { setUser } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const searchParams = useSearchParams();
 
   useEffect(() => {
