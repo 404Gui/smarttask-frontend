@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import api from "@/services/api";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import LoadingOverlay from "@/components/LoadingOverlay/LoadingOverlay";
 
 const registerSchema = z.object({
   username: z.string().min(3, "Mínimo 3 caracteres"),
@@ -85,7 +84,6 @@ export default function RegisterForm() {
           Já tem uma conta? <a href="/login">Faça o login</a>
         </p>
       </form>
-      <LoadingOverlay show={loading} mensagem={"Registrando novo usuario"} />
     </>
   );
 }

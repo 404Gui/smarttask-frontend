@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import api from "@/services/api";
 import { useAuth } from "@/context/AuthContext";
-import LoadingOverlay from "@/components/LoadingOverlay/LoadingOverlay";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -101,7 +100,6 @@ export default function LoginForm() {
           Não tem cadastro? <a href="/register">Faça o registro</a>
         </p>
 
-        <LoadingOverlay show={loading} mensagem={"Autenticando usuário"} />
       </form>
     </>
   );

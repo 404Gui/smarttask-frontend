@@ -9,7 +9,6 @@ import TaskFilters from "@/components/TaskFilters/TaskFilters";
 import PriorityAccordion from "@/components/PriorityAccordion/PriorityAccordion";
 import SectionTabs from "@/components/SectionTabs/SectionTabs";
 import ListSection from "@/components/SectionTabs/ListSection/ListSection";
-import LoadingOverlay from "@/components/LoadingOverlay/LoadingOverlay";
 import TaskItemOverlay from "@/components/SectionTabs/TaskSection/TaskItemOverlay";
 
 import {
@@ -194,7 +193,6 @@ export default function DashboardPage() {
   return (
     <>
       <Header />
-      <LoadingOverlay show={isLoading} mensagem={"Atualizando tarefa"} />
 
       <main className={styles.dashboard}>
         <SectionTabs activeSection={section} onChange={setSection} />
