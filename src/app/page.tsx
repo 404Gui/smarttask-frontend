@@ -19,7 +19,7 @@ export default function Home() {
       </header>
 
       <main className={styles.main}>
-        <h2 className={styles.title}>Organize sua vida com elegância</h2>
+        <h2 className={styles.title}>Organize sua vida com praticidade</h2>
         <p className={styles.subtitle}>
           Um gerenciador de tarefas refinado para quem valoriza foco e
           simplicidade.
