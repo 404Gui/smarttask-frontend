@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Taskoom",
+  title: "Taskoom - Seu gerenciador de tarefas prático",
   description:
     "Taskoom é um aplicativo de gerenciamento de tarefas moderno e eficiente, projetado para aumentar sua produtividade com recursos inteligentes e uma interface intuitiva.",
   keywords: [
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     "Next.js",
     "FastAPI",
   ],
-  authors: [{ name: "Pappi Dev", url: "https://www.pappi.dev" }],
+  authors: [{ name: "Guilherme Pappi", url: "https://www.pappi.dev" }],
   openGraph: {
     title: "Taskoom - Gerencie suas tarefas com praticidade",
     description:
